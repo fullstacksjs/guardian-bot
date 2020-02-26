@@ -1,0 +1,48 @@
+{
+  "name": "fullstacks-tg-bot",
+  "version": "0.0.0",
+  "description": "Telegram bot to manage developer groups",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/full-stacks/fullstacks-tg-bot"
+  },
+  "bugs": {
+    "url": "https://github.com/full-stacks/fullstacks-tg-bot/issues"
+  },
+  "homepage": "https://github.com/full-stacks/fullstacks-tg-bot/",
+  "keywords": [
+    "telegram",
+    "bot",
+    "fullstacks"
+  ],
+  "author": "frontendmonster <frontendmonster@gmail.com>",
+  "license": "AGPL-3.0",
+  "engines": {
+    "node": ">=12",
+    "yarn": ">=1"
+  },
+  "scripts": {
+    "commit": "git-cz"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "8.3.5",
+    "@commitlint/config-conventional": "8.3.4",
+    "@frontendmonster/eslint-config": "3.0.4",
+    "commitizen": "4.0.3",
+    "cz-conventional-changelog": "3.1.0",
+    "eslint": "6.8.0",
+    "husky": "4.2.3",
+    "prettier": "1.19.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
