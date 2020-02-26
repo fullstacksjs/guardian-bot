@@ -40,3 +40,6 @@ report.*.json
 
 # Deadcodes
 /.deadcodes
+
+# DB
+/data
