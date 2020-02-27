@@ -12,14 +12,14 @@ export default ctx => {
         if (res) {
           ctx.db.notes
             .update({ title: noteTitle }, { $set: { note } })
-            .then(res => {
-              ctx.reply(`Updated note ${noteTitle}`, { reply_to_message_id: messageID });
+            .then(result => {
+              ctx.reply(`📝 Updated note ${noteTitle}.`, { reply_to_message_id: messageID });
             })
             .catch(err => {
               throw new Error(err);
             });
         } else {
-          ctx.reply(`${noteTitle} doesn't exists`, { reply_to_message_id: messageID });
+          ctx.reply(`😓 ${noteTitle} doesn't exist.`, { reply_to_message_id: messageID });
         }
       })
       .catch(err => {

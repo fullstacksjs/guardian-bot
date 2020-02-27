@@ -9,9 +9,9 @@ export default ctx => {
         const notes = res.map(note => {
           return note.title;
         });
-        ctx.reply(`List of notes:\n- ${notes.join('\n- ')}`, { reply_to_message_id: messageID });
+        ctx.reply(`📑 List of notes:\n\n- ${notes.join('\n- ')}`, { reply_to_message_id: messageID });
       } else {
-        ctx.reply('There is no note', { reply_to_message_id: messageID });
+        ctx.reply("😓 There isn't any note here.", { reply_to_message_id: messageID });
       }
     })
     .catch(err => {

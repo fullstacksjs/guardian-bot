@@ -11,14 +11,14 @@ export default ctx => {
         if (res) {
           ctx.db.notes
             .remove({ title: noteTitle })
-            .then(res => {
-              ctx.reply(`Removed note ${noteTitle}`, { reply_to_message_id: messageID });
+            .then(result => {
+              ctx.reply(`🗑 Removed note ${noteTitle}.`, { reply_to_message_id: messageID });
             })
             .catch(err => {
               throw new Error(err);
             });
         } else {
-          ctx.reply(`${noteTitle} doesn't exist`, { reply_to_message_id: messageID });
+          ctx.reply(`😓 ${noteTitle} doesn't exist.`, { reply_to_message_id: messageID });
         }
       })
       .catch(err => {

@@ -15,14 +15,14 @@ export default ctx => {
               title: noteTitle,
               note,
             })
-            .then(res => {
-              ctx.reply(`Saved note ${noteTitle}`, { reply_to_message_id: messageID });
+            .then(result => {
+              ctx.reply(`🎉 Saved note ${noteTitle}.`, { reply_to_message_id: messageID });
             })
             .catch(err => {
               throw new Error(err);
             });
         } else {
-          ctx.reply(`${noteTitle} already exists`, { reply_to_message_id: messageID });
+          ctx.reply(`😓 ${noteTitle} already exists.`, { reply_to_message_id: messageID });
         }
       })
       .catch(err => {
