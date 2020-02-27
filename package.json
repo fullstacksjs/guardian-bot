@@ -34,8 +34,8 @@
   },
   "dependencies": {
     "dotenv-cli": "3.1.0",
-    "nedb-promises": "4.0.1",
-    "telegraf": "ssh://github.com/frontendmonster/telegraf.git#fix/composer-typings"
+    "nedb-promises": "^4.0.1",
+    "telegraf": "https://github.com/frontendmonster/telegraf.git#fix/composer-typings"
   },
   "devDependencies": {
     "@commitlint/cli": "8.3.5",

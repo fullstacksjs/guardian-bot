@@ -1,5 +1,5 @@
 export const config: BotConfig = {
-  token: process.env.TOKEN,
+  token: process.env.TOKEN_API,
   name: process.env.BOT_NAME,
 };
 
