@@ -282,11 +282,6 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
   integrity sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
 
-"@types/node@^13.1.0":
-  version "13.7.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.7.6.tgz#cb734a7c191472ae6a2b3a502b4dfffcea974113"
-  integrity sha512-eyK7MWD0R1HqVTp+PtwRgFeIsemzuj4gBFSQxfPHY5iMjS7474e5wq+VFgTcdpyHeNxyKSaetYAjdMLJlKoWqA==
-
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
@@ -3930,12 +3925,10 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-telegraf@3.36.0:
+"telegraf@ssh://github.com/frontendmonster/telegraf.git#fix/composer-typings":
   version "3.36.0"
-  resolved "https://registry.yarnpkg.com/telegraf/-/telegraf-3.36.0.tgz#eab1160159df6033d3cb92ac990902523277822a"
-  integrity sha512-9o6AJKRiTm5vMWYI6WpTfBHzu4FMpWBNKxvnMxRds/cbMY9RnsVVjdi8i4bFFlfd+xbi73EbrnI3dybayryICA==
+  resolved "ssh://github.com/frontendmonster/telegraf.git#d2a591cc1b957adc74325857227fca6f14be24f2"
   dependencies:
-    "@types/node" "^13.1.0"
     debug "^4.0.1"
     minimist "^1.2.0"
     module-alias "^2.2.2"
