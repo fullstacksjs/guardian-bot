@@ -1,40 +1,36 @@
 import { Markup, Composer, ContextMessageUpdate } from 'telegraf';
 import { Context } from '../context';
+import { User } from '../store';
 
 const captcha = new Composer<Context>();
 
-captcha.on('new_chat_members', ctx => {
+async function findOrCreate<T>(model: Datastore, query: any, data: T): Promise<T> {
+  const resource = await model.findOne<T>(query);
+
+  if (resource) {
+    return resource;
+  }
+
+  return model.insert<T>(data);
+}
+
+captcha.on('new_chat_members', async ctx => {
   const { new_chat_members, chat, from, message_id } = ctx.update.message;
 
-  new_chat_members.forEach(async new_user => {
-    if (new_user.id === from.id) {
-      await ctx.db.users
-        .findOne({
-          id: new_user.id,
-        })
-        .then(async user => {
-          if (!user) {
-            await ctx.db.users
-              .insert({
-                id: new_user.id,
-              })
-              .then(res => {
-                user = res;
-              });
-          }
-          if (user.is_bot === null) {
-            ctx.reply('Are you a 🤖?', {
-              reply_to_message_id: message_id,
-              reply_markup: Markup.inlineKeyboard([
-                Markup.callbackButton('No', `no-${new_user.id}`),
-                Markup.callbackButton('Kick (Admin Only)', `kick-${new_user.id}`),
-              ]),
-            });
-          } else if (user.is_bot) {
-            ctx.kickChatMember(chat.id, new_user.id);
-          }
-        });
-    }
+  const newUser = new_chat_members.find(member => member.id === from.id);
+
+  const user = await findOrCreate<User>(ctx.db.users, { id: newUser.id }, { id: newUser.id });
+
+  if (user.isBot) {
+    return ctx.telegram.kickChatMember(chat.id, newUser.id);
+  }
+
+  ctx.reply('Are you a 🤖?', {
+    reply_to_message_id: message_id,
+    reply_markup: Markup.inlineKeyboard([
+      Markup.callbackButton('No', `no-${newUser.id}`),
+      Markup.callbackButton('Kick (Admin Only)', `kick-${newUser.id}`),
+    ]),
   });
 });
 
