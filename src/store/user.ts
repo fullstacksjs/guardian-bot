@@ -15,5 +15,6 @@ export function UserStore() {
 }
 
 export interface User {
-  id: string;
+  id: number;
+  is_bot: boolean;
 }
