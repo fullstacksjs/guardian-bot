@@ -53,10 +53,18 @@ captcha.action(/^(no)-(\d+)$/, ctx => {
 });
 
 captcha.action(/^(kick)-(\d+)$/, ctx => {
+  // FIX ME: Add admin condition and set isBot to true
   const userId = ctx.callbackQuery.data.split('-')[1];
   ctx.editMessageText('Kicked');
   ctx.db.users.update({ id: userId }, { isBot: true });
+  ctx.telegram.kickChatMember(ctx.callbackQuery.message.chat.id, Number(userId));
   ctx.deleteMessage();
 });
 
+captcha.command('unban', ctx => {
+  // Fix me: Add admin condition
+  const userId = ctx.message.text.split(' ')[1];
+  ctx.telegram.unbanChatMember(ctx.message.chat.id, Number(userId));
+  ctx.db.users.update({ id: userId }, { isBot: false });
+});
 export { captcha };
