@@ -1,4 +1,4 @@
-import { Markup, Composer, ContextMessageUpdate } from 'telegraf';
+import { Markup, Composer } from 'telegraf';
 import { Context } from '../context';
 import { User } from '../store';
 
@@ -22,8 +22,11 @@ captcha.on('new_chat_members', async ctx => {
   const user = await findOrCreate<User>(ctx.db.users, { id: newUser.id }, { id: newUser.id });
 
   if (user.isBot) {
-    return ctx.telegram.kickChatMember(chat.id, newUser.id);
+    ctx.telegram.kickChatMember(chat.id, newUser.id);
+    return;
   }
+
+  ctx.telegram.restrictChatMember(chat.id, newUser.id);
 
   ctx.reply('Are you a 🤖?', {
     reply_to_message_id: message_id,
@@ -34,8 +37,25 @@ captcha.on('new_chat_members', async ctx => {
   });
 });
 
-captcha.action(/^(no)-(\d+)$/, (ctx: ContextMessageUpdate) => {
-  ctx.editMessageText('Confirmed');
+captcha.action(/^(no)-(\d+)$/, ctx => {
+  const userId = ctx.callbackQuery.data.split('-')[1];
+  if (ctx.callbackQuery.from.id !== Number(userId)) {
+    ctx.answerCbQuery('You Dont Have Permission!!');
+    return;
+  }
+  ctx.telegram.restrictChatMember(ctx.callbackQuery.message.chat.id, ctx.callbackQuery.from.id, {
+    can_send_other_messages: true,
+    can_add_web_page_previews: true,
+    can_send_media_messages: true,
+    can_send_messages: true,
+  });
+  ctx.deleteMessage();
+});
+
+captcha.action(/^(kick)-(\d+)$/, ctx => {
+  const userId = ctx.callbackQuery.data.split('-')[1];
+  ctx.editMessageText('Kicked');
+  ctx.db.users.update({ id: userId }, { isBot: true });
   ctx.deleteMessage();
 });
 
