@@ -1,2 +1,3 @@
-export { Store, createStore } from './store';
+export { Store, store } from './store';
 export { User } from './user';
+export { Language } from './language';
