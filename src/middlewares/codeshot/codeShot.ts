@@ -4,6 +4,7 @@ import { Middleware } from 'telegraf';
 import puppeteer from 'puppeteer-core';
 import hljs from 'highlight.js';
 import prettier from 'prettier';
+import chrome from 'chrome-aws-lambda';
 import { Context } from '../../context';
 import { isPre, resolveModule, getEntityText, isNullOrEmpty } from '../../utils';
 import { Language } from '../../store';
@@ -85,7 +86,15 @@ const getHtml = (code: string) => `
 </html>`;
 
 async function getShot(html: string, id: string) {
-  const browser = await puppeteer.launch({ executablePath: '/usr/bin/chromium' });
+  const config =
+    process.env.NODE_ENV === 'production'
+      ? {
+          args: chrome.args,
+          executablePath: await chrome.executablePath,
+          headless: chrome.headless,
+        }
+      : { executablePath: '/usr/bin/chromium' };
+  const browser = await puppeteer.launch(config);
   const page = await browser.newPage();
   await page.setContent(html);
 
@@ -118,18 +127,15 @@ const getHljsLanguage = async (code: Code, langStore: Datastore): Promise<Code> 
   const hljsLangs = hljs.listLanguages();
 
   if (hljsLangs.includes(code.language)) {
-    console.log('Language found in hljs');
     return Promise.resolve(code);
   }
 
   const language = await langStore.findOne<Language>({ alias: code.language });
 
   if (language == null) {
-    console.log('Language not found');
     return { code: `${code.language}${code.code}` };
   }
 
-  console.log('Alias found');
   return { ...code, language: language.language };
 };
 

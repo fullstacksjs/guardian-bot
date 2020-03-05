@@ -14,7 +14,7 @@
     "removeComments": true,
     "skipLibCheck": true,
     "strictFunctionTypes": true,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": false
   },
   "include": [
     "./src"

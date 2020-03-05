@@ -1,25 +1,19 @@
 import { Composer } from 'telegraf';
 import { Context } from '../../context';
-import { save } from './save';
-import { hashtag, command } from './get';
-import { update } from './update';
-import { getAll } from './getAll';
-import { remove } from './remove';
+import { saveNote } from './saveNote';
+import { hashtag, getNote } from './getNote';
+import { update } from './updateNote';
+import { listNotes } from './listNote';
+import { remove } from './removeNote';
 
 const notes = new Composer<Context>();
 
-notes.command('save', save);
-notes.command('get', command);
+notes.command('save', saveNote);
+notes.command('get', getNote);
 notes.command('update', update);
-notes.command('notes', getAll);
+notes.command('notes', listNotes);
 notes.command('remove', remove);
 
-notes.on('text', ctx => {
-  const { message } = ctx;
-
-  if (message.text.split(' ')[0][0] === '#') {
-    hashtag(ctx);
-  }
-});
+notes.on('text', hashtag);
 
 export { notes };
