@@ -16,6 +16,5 @@ export function UserStore() {
 
 export interface User {
   id: number;
-  isBot?: boolean;
   status?: 'admin' | 'restricted' | 'banned' | 'member';
 }

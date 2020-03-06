@@ -10,7 +10,7 @@ const unban: Middleware<Context> = async ctx => {
   }
 
   ctx.unbanChatMember(userId);
-  ctx.db.users.update({ id: userId }, { status: 'memeber' });
+  ctx.db.users.update({ id: userId }, { $set: { status: 'memeber' } });
 };
 
 export default unban;
