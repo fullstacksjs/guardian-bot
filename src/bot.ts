@@ -5,7 +5,7 @@ import middlewares from './handlers/middlewares';
 import commands from './handlers/commands';
 import { monkeyPatch } from './utils/telegraf';
 
-export function Bot({ token, name }: BotConfig) {
+export function Bot({ token }: BotConfig) {
   const bot = new Telegraf<Context>(token, { contextType: Context });
 
   bot.use(monkeyPatch);

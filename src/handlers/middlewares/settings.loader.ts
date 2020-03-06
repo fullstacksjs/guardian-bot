@@ -4,8 +4,6 @@ import { Settings } from '../../store';
 import { findOrCreate } from '../../utils';
 
 const loadSettings: Middleware<Context> = async (ctx, next) => {
-  ctx.log('Load Settings');
-
   const settings = await findOrCreate<Settings>(
     ctx.db.settings,
     { chatId: ctx.chat.id },

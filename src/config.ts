@@ -1,6 +1,5 @@
 export const config: BotConfig = {
   token: process.env.BOT_TOKEN,
-  name: process.env.BOT_NAME,
   domain: process.env.BOT_DOMAIN || process.env.NOW_URL,
   port: Number.parseInt(process.env.PORT, 10),
   host: process.env.HOST,
@@ -16,7 +15,6 @@ export interface Logger {
 
 export interface BotConfig {
   token: string;
-  name: string;
   port: number;
   host: string;
   domain: string;

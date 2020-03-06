@@ -16,14 +16,16 @@ import captcha from './captcha';
 
 const middlewares = new Composer<Context>();
 
-middlewares.use(loadSettings, loadUser, loadGroups);
+middlewares.use(loadSettings, loadGroups);
 middlewares.on('new_chat_members', addedToGroupHandler);
 middlewares.on('left_chat_member', kickHandler);
-middlewares.use(captcha);
 middlewares.use(leaveUnmanaged);
 // middlewares.use(handleTimeout);
 middlewares.on('new_chat_members', syncUsers);
+middlewares.use(captcha);
 middlewares.on(['new_chat_members', 'left_chat_member'], deleteWithDelay, logMemberEvents);
+
+middlewares.use(loadUser);
 middlewares.use(restrictUserHandler);
 middlewares.use(forbiddenLinksHandler);
 
