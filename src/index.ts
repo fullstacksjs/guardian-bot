@@ -14,3 +14,6 @@ const webhook =
 
 bot.catch((err: Error) => config.logger.error('🤖: Unhandled error', err));
 bot.launch({ webhook }).then(() => config.logger.log(`🤖: Bot started`));
+
+// eslint-disable-next-line no-console
+process.on('unhandledRejection', e => console.error(e));

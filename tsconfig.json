@@ -14,9 +14,14 @@
     "removeComments": true,
     "skipLibCheck": true,
     "strictFunctionTypes": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "typeRoots": [
+      "./@types/",
+      "./node_modules/@types/"
+    ]
   },
   "include": [
-    "./src"
+    "./src",
+    "./@types"
   ]
 }

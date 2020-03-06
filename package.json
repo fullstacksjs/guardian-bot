@@ -33,25 +33,28 @@
     "start": "dotenv node ."
   },
   "dependencies": {
-    "@types/prettier": "1.19.0",
+    "@frontendmonster/utils": "0.2.10",
+    "@types/dedent": "0.7.0",
     "chrome-aws-lambda": "2.1.1",
+    "dedent": "0.7.0",
     "dotenv-cli": "3.1.0",
     "highlight.js": "9.18.1",
     "micro-bot": "2.5.3",
     "nedb-promises": "4.0.1",
     "puppeteer-core": "2.1.1",
     "ramda": "0.27.0",
-    "telegraf": "https://github.com/frontendmonster/telegraf.git#skill",
-    "telegram-typings": "4.0.0-beta"
+    "tall": "3.0.0",
+    "telegraf": "https://github.com/frontendmonster/telegraf.git#skill"
   },
   "devDependencies": {
     "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
     "@frontendmonster/eslint-config": "3.0.4",
     "@types/highlight.js": "9.12.3",
-    "@types/node": "13.7.6",
+    "@types/node": "13.7.7",
+    "@types/prettier": "1.19.0",
     "@types/puppeteer-core": "2.0.0",
-    "@types/ramda": "0.26.42",
+    "@types/ramda": "0.26.43",
     "commitizen": "4.0.3",
     "cz-conventional-changelog": "3.1.0",
     "eslint": "6.8.0",
@@ -60,7 +63,7 @@
     "prettier": "1.19.1",
     "shx": "0.3.2",
     "ts-node-dev": "1.0.0-pre.44",
-    "typescript": "3.8.2"
+    "typescript": "3.8.3"
   },
   "config": {
     "commitizen": {
