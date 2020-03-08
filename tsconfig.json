@@ -4,6 +4,8 @@
     "target": "ES2019",
     "outDir": "./dist",
     "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "lib": ["ES2020.String"],
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,

@@ -1,7 +1,6 @@
 import { MessageEntity, Middleware, Composer } from 'telegraf';
 import { tall } from 'tall';
 import { Context } from '../../context';
-import { getUrlFromEntity } from '../../utils';
 
 const forbiddenLinksHandler: Middleware<Context> = (ctx, next) => {
   const message = ctx.editedMessage || ctx.message;
@@ -17,7 +16,7 @@ const forbiddenLinksHandler: Middleware<Context> = (ctx, next) => {
     : [...message.entities];
 
   entities.forEach(async entity => {
-    const url: string = getUrlFromEntity(message, entity);
+    const url: string = ctx.getUrlFromEntity(entity);
 
     if (!url) {
       return;

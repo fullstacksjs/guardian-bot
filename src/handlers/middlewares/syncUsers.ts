@@ -26,6 +26,15 @@ const syncUsers: Middleware<Context> = async (ctx, next) => {
           can_promote_members: false,
           can_restrict_members: true,
         });
+      case 'restricted':
+        return ctx.promoteChatMember(user.id, {
+          can_change_info: false,
+          can_delete_messages: false,
+          can_invite_users: false,
+          can_pin_messages: false,
+          can_promote_members: false,
+          can_restrict_members: false,
+        });
       case 'banned':
         return ctx.kickChatMember(user.id);
       case 'member':

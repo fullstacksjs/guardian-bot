@@ -35,6 +35,7 @@
   "dependencies": {
     "@frontendmonster/utils": "0.2.10",
     "@types/dedent": "0.7.0",
+    "@typescript-eslint/typescript-estree": "2.22.0",
     "chrome-aws-lambda": "2.1.1",
     "dedent": "0.7.0",
     "dotenv-cli": "3.1.0",
@@ -49,9 +50,9 @@
   "devDependencies": {
     "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
-    "@frontendmonster/eslint-config": "3.0.4",
+    "@frontendmonster/eslint-config": "3.0.5",
     "@types/highlight.js": "9.12.3",
-    "@types/node": "13.7.7",
+    "@types/node": "13.9.0",
     "@types/prettier": "1.19.0",
     "@types/puppeteer-core": "2.0.0",
     "@types/ramda": "0.26.43",

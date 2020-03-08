@@ -2,22 +2,23 @@ import { Middleware } from 'telegraf';
 import { Context } from '../../context';
 
 const timeoutHandler: Middleware<Context> = (ctx, next) => {
-  ctx.log('HandleTimeout');
-  const timeout = ctx.settings.timeout;
+  const timeout = ctx.settings.timeout || process.env.DEFAULT_TIMEOUT;
 
   if (!timeout) {
     return next();
   }
 
+  const now = new Date().getTime() / 1000;
+
   switch (ctx.updateType) {
     case 'message':
-      if (new Date().getTime() / 1000 - ctx.message.date < timeout) {
-        next();
+      if (now - ctx.message.date < timeout) {
+        return next();
       }
       break;
     case 'callback_query':
-      if (ctx.callbackQuery.message && new Date().getTime() / 1000 - ctx.callbackQuery.message.date < timeout) {
-        next();
+      if (ctx.callbackQuery.message && now - ctx.callbackQuery.message.date < timeout) {
+        return next();
       }
       break;
     default:

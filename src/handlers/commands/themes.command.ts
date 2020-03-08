@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { Middleware } from 'telegraf';
-import { Context } from '../../../context';
-import { resolveModule } from '../../../utils';
+import { Context } from '../../context';
+import { resolveModule } from '../../utils';
 
 const themesHandler: Middleware<Context> = ctx => {
   const themesDir = resolveModule('highlight.js/styles');
@@ -12,4 +12,4 @@ const themesHandler: Middleware<Context> = ctx => {
   ctx.reply(themes.join('\n'));
 };
 
-export { themesHandler };
+export default themesHandler;

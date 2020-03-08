@@ -1,6 +1,6 @@
 import path from 'path';
 import R from 'ramda';
-import { MessageEntity, User, Message } from 'telegraf';
+import { User } from 'telegraf';
 import { Group } from '../store';
 
 interface Document {
@@ -12,9 +12,6 @@ interface Document {
 export const isPre = R.propEq('type', 'pre');
 
 export const isNullOrEmpty = R.anyPass([R.isNil, R.isEmpty]);
-
-export const getEntityText = (str: string, entity: MessageEntity) =>
-  str.slice(entity.offset, entity.offset + entity.length);
 
 export const ROOT = path.resolve(path.dirname(require.main.filename), '..');
 
@@ -54,16 +51,3 @@ export const getGroupname = (group: Group) => {
 
   return name;
 };
-
-export function getUrlFromEntity(message: Message, entity: MessageEntity) {
-  if (entity.type === 'url') {
-    const url = message.text || message.caption;
-    return getEntityText(url, entity);
-  }
-
-  if (entity.type === 'text_link' && entity.url) {
-    return entity.url;
-  }
-
-  return null;
-}

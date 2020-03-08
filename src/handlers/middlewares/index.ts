@@ -16,11 +16,11 @@ import captcha from './captcha';
 
 const middlewares = new Composer<Context>();
 
+middlewares.use(timeoutHandler);
 middlewares.use(loadSettings, loadGroups);
 middlewares.on('new_chat_members', addedToGroupHandler);
 middlewares.on('left_chat_member', kickHandler);
 middlewares.use(leaveUnmanaged);
-// middlewares.use(handleTimeout);
 middlewares.on('new_chat_members', syncUsers);
 middlewares.use(captcha);
 middlewares.on(['new_chat_members', 'left_chat_member'], deleteWithDelay, logMemberEvents);
