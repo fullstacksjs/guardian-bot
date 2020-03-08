@@ -35,7 +35,7 @@ async function getShot(html: string, name: string) {
   const browser = await puppeteer.launch(config);
   const page = await browser.newPage();
   await page.setContent(html);
-  await page.addStyleTag({ path: path.resolve(__dirname, './theme.css') });
+  await page.addStyleTag({ path: path.resolve(__dirname, '../../assets/theme.css') });
   const container = await page.$('#container');
 
   const clip = await page.evaluate(el => {
@@ -48,7 +48,7 @@ async function getShot(html: string, name: string) {
   const dest = resolveOutput(name);
   await page.screenshot({ path: dest, quality: 100 });
 
-  // browser.close();
+  browser.close();
   return dest;
 }
 

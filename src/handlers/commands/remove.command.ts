@@ -1,8 +1,8 @@
 import { Middleware } from 'telegraf';
-import { Context } from '../../../context';
-import * as md from '../../../utils/md';
+import { Context } from '../../context';
+import md from '../../utils/md';
 
-export const removeNote: Middleware<Context> = async ctx => {
+const removeHandler: Middleware<Context> = async ctx => {
   const { message } = ctx;
   const messageID = message.message_id;
 
@@ -20,3 +20,5 @@ export const removeNote: Middleware<Context> = async ctx => {
 
   return ctx.replyWithMarkdown(`✅ Note ${md.code(title)} Removed`, { reply_to_message_id: messageID });
 };
+
+export default removeHandler;

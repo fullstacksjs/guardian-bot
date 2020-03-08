@@ -1,7 +1,7 @@
 import Datastore from 'nedb-promises';
 import { noop } from '@frontendmonster/utils';
 import hljs from 'highlight.js';
-import parsers from './parsers.json';
+import parsers from '../assets/parsers.json';
 
 function seedLanguages(db: Datastore) {
   return Promise.all(

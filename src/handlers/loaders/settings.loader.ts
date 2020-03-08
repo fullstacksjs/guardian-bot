@@ -3,7 +3,7 @@ import { Context } from '../../context';
 import { Settings } from '../../store';
 import { findOrCreate } from '../../utils';
 
-const loadSettings: Middleware<Context> = async (ctx, next) => {
+const settingsLoader: Middleware<Context> = async (ctx, next) => {
   const settings = await findOrCreate<Settings>(
     ctx.db.settings,
     { chatId: ctx.chat.id },
@@ -15,4 +15,4 @@ const loadSettings: Middleware<Context> = async (ctx, next) => {
   next();
 };
 
-export default loadSettings;
+export default settingsLoader;

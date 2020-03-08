@@ -1,10 +1,10 @@
 import { Middleware } from 'telegraf';
-import { Context } from '../../../context';
-import * as md from '../../../utils/md';
-import { Language } from '../../../store';
-import { createOrUpdate } from '../../../utils';
+import { Context } from '../../context';
+import md from '../../utils/md';
+import { Language } from '../../store';
+import { createOrUpdate } from '../../utils';
 
-const createAlias: Middleware<Context> = async ctx => {
+const aliasHandler: Middleware<Context> = async ctx => {
   const [, language, alias] = ctx.getTokens();
 
   if (!language || !alias) {
@@ -22,4 +22,4 @@ const createAlias: Middleware<Context> = async ctx => {
   ctx.replyWithMarkdown(`The language ${md.code(language)} has been aliased to ${md.code(alias)}`);
 };
 
-export { createAlias };
+export default aliasHandler;

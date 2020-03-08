@@ -2,7 +2,7 @@ import { Middleware } from 'telegraf';
 import { Context } from '../../context';
 import { Group } from '../../store';
 
-const loadGroups: Middleware<Context> = async (ctx, next) => {
+const groupsLoader: Middleware<Context> = async (ctx, next) => {
   ctx.log('Load Groups');
 
   const groups = await ctx.db.groups.find<Group>({});
@@ -12,4 +12,4 @@ const loadGroups: Middleware<Context> = async (ctx, next) => {
   next();
 };
 
-export default loadGroups;
+export default groupsLoader;

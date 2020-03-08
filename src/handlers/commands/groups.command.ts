@@ -1,7 +1,7 @@
 import { Middleware } from 'telegraf';
 import dedent from 'dedent';
 import { Context } from '../../context';
-import * as md from '../../utils/md';
+import md from '../../utils/md';
 import { getGroupname } from '../../utils';
 
 const groupsHandler: Middleware<Context> = (ctx, next) => {

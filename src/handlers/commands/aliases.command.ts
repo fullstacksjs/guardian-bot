@@ -1,12 +1,12 @@
 import { Middleware } from 'telegraf';
-import { Context } from '../../../context';
-import * as md from '../../../utils/md';
-import { Language } from '../../../store';
+import { Context } from '../../context';
+import md from '../../utils/md';
+import { Language } from '../../store';
 
-const listAliases: Middleware<Context> = async ctx => {
+const aliasesHandler: Middleware<Context> = async ctx => {
   const languages = await ctx.db.languages.find<Language>({});
 
-  if (languages.length === 0) {
+  if (!languages.length) {
     ctx.replyWithMarkdown(`You have no alias. try to create one with\n${md.code('/alias <language> <alias>')}`);
     return;
   }
@@ -15,4 +15,4 @@ const listAliases: Middleware<Context> = async ctx => {
   ctx.replyWithMarkdown(`Aliases:\n${aliases.join('\n')}`);
 };
 
-export { listAliases };
+export default aliasesHandler;
