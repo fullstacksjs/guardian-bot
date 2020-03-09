@@ -30,6 +30,7 @@
     "prebuild": "yarn run clean",
     "build": "tsc",
     "dev": "dotenv -- ts-node-dev --no-notify --respawn --transpileOnly ./src",
+    "postinstall": "yarn run build",
     "start": "dotenv node ."
   },
   "dependencies": {
