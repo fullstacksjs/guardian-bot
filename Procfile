@@ -1,1 +1,1 @@
-worker: node dist/index.js
+Worker: node dist/index.js
