@@ -43,6 +43,7 @@
     "highlight.js": "9.18.1",
     "micro-bot": "2.5.3",
     "nedb-promises": "4.0.1",
+    "prettier": "1.19.1",
     "puppeteer-core": "2.1.1",
     "ramda": "0.27.0",
     "tall": "3.0.0",
@@ -62,7 +63,6 @@
     "eslint": "6.8.0",
     "husky": "4.2.3",
     "lint-staged": "10.0.8",
-    "prettier": "1.19.1",
     "shx": "0.3.2",
     "ts-node-dev": "1.0.0-pre.44",
     "typescript": "3.8.3"
