@@ -82,7 +82,7 @@ const shotHandler: Middleware<Context> = async (ctx, next) => {
     .map(pre => ctx.getEntityText(pre, message.text))
     .map(pre => ({ code: pre.trim(), language: ctx.language?.language, parser: ctx.language?.parser } as Code))
     .map(code => highlight(format(code)))
-    .map(hl => getHtml(hl.value, hl.language, ctx.entities[2].content))
+    .map(hl => getHtml(hl.value, hl.language, ctx.entities[2]?.content))
     .map((template, index) => getShot(template, `${ctx.from.id}-${index}`));
 
   const shots = await Promise.all(getShots);
