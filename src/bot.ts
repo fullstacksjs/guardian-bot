@@ -1,4 +1,4 @@
-import Telegraf from 'telegraf';
+import Telegraf from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
 import { Context } from './context';
 import { BotConfig } from './config';
 import middlewares from './handlers/middlewares';

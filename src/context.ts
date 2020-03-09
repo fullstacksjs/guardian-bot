@@ -1,4 +1,10 @@
-import Telegraf, { AdminPermissions, MessageEntity, EntityType, Telegram, TOptions } from 'telegraf';
+import Telegraf, {
+  AdminPermissions,
+  MessageEntity,
+  EntityType,
+  Telegram,
+  TOptions,
+} from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
 import R from 'ramda';
 import { randomInt } from '@frontendmonster/utils';
 import { store, Store, Settings, User, Url, Group, Language } from './store';

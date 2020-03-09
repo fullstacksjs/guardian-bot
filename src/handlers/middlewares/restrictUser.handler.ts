@@ -1,4 +1,4 @@
-import { Middleware, Composer } from 'telegraf';
+import { Middleware, Composer } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
 import { Context } from '../../context';
 
 const restrictUserHandler: Middleware<Context> = async (ctx, next) => {

@@ -1,4 +1,4 @@
-import { Composer } from 'telegraf';
+import { Composer } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
 import { Context } from '../../context';
 import settingsLoader from '../loaders/settings.loader';
 import userLoader from '../loaders/user.loader';

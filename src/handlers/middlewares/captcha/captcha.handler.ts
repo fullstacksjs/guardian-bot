@@ -1,4 +1,4 @@
-import { Middleware, Markup } from 'telegraf';
+import { Middleware, Markup } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
 import { findOrCreate, getUsername } from '../../../utils';
 import { Context } from '../../../context';
 import { User } from '../../../store';

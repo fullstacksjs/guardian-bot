@@ -1,4 +1,4 @@
-import { Middleware } from 'telegraf';
+import { Middleware } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
 import dedent from 'dedent';
 import { Context } from '../../context';
 import md from '../../utils/md';

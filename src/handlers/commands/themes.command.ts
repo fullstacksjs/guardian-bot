@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { Middleware } from 'telegraf';
+import { Middleware } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
 import { Context } from '../../context';
 import { resolveModule } from '../../utils';
 

@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import { Middleware } from 'telegraf';
+import { Middleware } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
 import puppeteer from 'puppeteer-core';
 import hljs from 'highlight.js';
 import prettier, { BuiltInParserName } from 'prettier';
