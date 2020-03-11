@@ -35,7 +35,7 @@ export class Context extends Telegraf.Context {
     },
     bye: {
       caption:
-        "Hmm, I don't belong here, FullstacksGuradBot is an FOSS project.\nSo if you like me host your onw instance.",
+        "Hmm, I don't belong here, FullstacksGuradBot is a FOSS project.\nSo if you like me host your onw instance.",
       gifs: R.map(giphy)(['MZcLsjyAASdcuf5m2G', '26n6JS4kltXRCw1kA']),
     },
   };
