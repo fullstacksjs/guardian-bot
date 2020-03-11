@@ -1,4 +1,4 @@
-import { Middleware, Composer } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
+import { Middleware, Composer } from 'telegraf-ts';
 import { Context } from '../../context';
 
 const leaveUnmanaged: Middleware<Context> = async (ctx, next) => {

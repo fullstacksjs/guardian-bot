@@ -1,12 +1,12 @@
 import path from 'path';
 import fs from 'fs';
-import { Middleware } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
+import { Middleware } from 'telegraf-ts';
 import puppeteer from 'puppeteer-core';
 import hljs from 'highlight.js';
 import prettier, { BuiltInParserName } from 'prettier';
-import chrome from 'chrome-aws-lambda';
 import { Context } from '../../context';
 import { isPre, isNullOrEmpty } from '../../utils';
+import prettierConfig from '../../assets/prettier.json';
 
 const getHtml = (code: string, language: string, filename: string) => `
 <html lang="en">
@@ -27,10 +27,7 @@ const getHtml = (code: string, language: string, filename: string) => `
 const resolveOutput = (name: string) => `${path.resolve(process.cwd(), 'data', name)}.jpeg`;
 
 async function getShot(html: string, name: string) {
-  const config =
-    process.env.NODE_ENV === 'production'
-      ? { args: chrome.args, executablePath: await chrome.executablePath, headless: chrome.headless }
-      : { executablePath: '/usr/bin/chromium', headless: false };
+  const config = { executablePath: process.env.CHROMIUM_PATH, args: ['--no-sandbox'] };
 
   const browser = await puppeteer.launch(config);
   const page = await browser.newPage();
@@ -56,7 +53,7 @@ const format = (code: Code): Code => {
   try {
     return {
       ...code,
-      code: prettier.format(code.code, { parser: code.parser }),
+      code: prettier.format(code.code, { parser: code.parser, ...(prettierConfig as prettier.Options) }),
     };
   } catch {
     return code;

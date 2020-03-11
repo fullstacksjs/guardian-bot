@@ -1,5 +1,5 @@
 import Datastore from 'nedb-promises';
-import { ChatType } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
+import { ChatType } from 'telegraf-ts';
 
 export function GroupStore() {
   const group = new Datastore({

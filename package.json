@@ -29,15 +29,14 @@
     "lint:fix": "yarn run lint --fix",
     "prebuild": "yarn run clean",
     "build": "tsc",
+    "postbuild": "shx cp -r src/assets/ dist/",
     "dev": "dotenv -- ts-node-dev --no-notify --respawn --transpileOnly ./src",
-    "postinstall": "yarn run build",
     "start": "dotenv node ."
   },
   "dependencies": {
     "@frontendmonster/utils": "0.2.10",
     "@types/dedent": "0.7.0",
     "@typescript-eslint/typescript-estree": "2.22.0",
-    "chrome-aws-lambda": "2.1.1",
     "dedent": "0.7.0",
     "dotenv-cli": "3.1.0",
     "highlight.js": "9.18.1",
@@ -47,7 +46,7 @@
     "puppeteer-core": "2.1.1",
     "ramda": "0.27.0",
     "tall": "3.0.0",
-    "this-is-a-package-for-draft-stuff-please-dont-use-this-one": "3.36.2"
+    "telegraf-ts": "3.36.2"
   },
   "devDependencies": {
     "@commitlint/cli": "8.3.5",

@@ -1,4 +1,4 @@
-import { Composer } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
+import { Composer } from 'telegraf-ts';
 import { Context } from '../../../context';
 import { onPass } from './pass';
 import { onReject } from './reject';

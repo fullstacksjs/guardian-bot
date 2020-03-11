@@ -1,6 +1,6 @@
 import path from 'path';
 import R from 'ramda';
-import { User } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
+import { User } from 'telegraf-ts';
 import { Group } from '../store';
 
 interface Document {

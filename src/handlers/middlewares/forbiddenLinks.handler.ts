@@ -1,4 +1,4 @@
-import { MessageEntity, Middleware, Composer } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
+import { MessageEntity, Middleware, Composer } from 'telegraf-ts';
 import { tall } from 'tall';
 import { Context } from '../../context';
 

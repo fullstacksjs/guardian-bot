@@ -1,4 +1,4 @@
-import { Composer } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
+import { Composer } from 'telegraf-ts';
 import { Context } from '../../context';
 import languageLoader from '../loaders/language.loader';
 import aliasesHandler from './aliases.command';

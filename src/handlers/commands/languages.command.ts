@@ -1,4 +1,4 @@
-import { Middleware } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
+import { Middleware } from 'telegraf-ts';
 import hljs from 'highlight.js';
 import { Context } from '../../context';
 import md from '../../utils/md';

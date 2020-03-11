@@ -1,4 +1,4 @@
-import { Middleware } from 'this-is-a-package-for-draft-stuff-please-dont-use-this-one';
+import { Middleware } from 'telegraf-ts';
 import { Context } from '../../context';
 import { User } from '../../store';
 import { findOrCreate } from '../../utils';
