@@ -25,16 +25,16 @@ WORKDIR /app
 COPY package.json .
 RUN yarn install
 
-RUN groupadd -r pptruser \
-  && useradd -r -g pptruser -G audio,video pptruser \
-  && mkdir -p /home/pptruser \
-  && chown -R pptruser:pptruser /home/pptruser \
+RUN groupadd -r pptruser --gid=999 \
+  && useradd -r -g pptruser -G audio,video --uid=999 --home-dir=/app/data/ --shell=/bin/bash pptruser \
+  && mkdir -p /app/data \
   && chown -R pptruser:pptruser /app
 
 USER pptruser
 
-COPY --chown=pptruser:pptruser . /app
+VOLUME ["/app/data"]
 
+COPY --chown=pptruser:pptruser . /app
 RUN yarn build
 
 ENTRYPOINT ["dumb-init", "--"]
