@@ -73,7 +73,12 @@ const shotHandler: Middleware<Context> = async (ctx, next) => {
 
   const pres = message?.entities?.filter(ent => isPre(ent));
 
-  if (isNullOrEmpty(pres)) return next();
+  if (isNullOrEmpty(pres)) {
+    ctx.replyWithMarkdown(
+      'I found no codeblock on your message, please wrap your code in 3 backticks (`) character and try again',
+    );
+    return next();
+  }
 
   const getShots = pres
     .map(pre => ctx.getEntityText(pre, message.text))
