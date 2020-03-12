@@ -11,7 +11,7 @@ const aliasesHandler: Middleware<Context> = async ctx => {
     return;
   }
 
-  const aliases = languages.map(alias => md.code(`${alias.alias} -> ${alias.language}`));
+  const aliases = languages.filter(l => l.alias !== l.language).map(l => md.code(`${l.alias} -> ${l.language}`));
   ctx.replyWithMarkdown(`Aliases:\n${aliases.join('\n')}`);
 };
 
