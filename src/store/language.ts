@@ -1,13 +1,4 @@
 import Datastore from 'nedb-promises';
-import { noop } from '@frontendmonster/utils';
-import hljs from 'highlight.js';
-import parsers from '../assets/parsers.json';
-
-function seedLanguages(db: Datastore) {
-  return Promise.all(
-    hljs.listLanguages().map(lang => db.insert({ language: lang, alias: lang, parser: (parsers as any)[lang] })),
-  );
-}
 
 export function LanguagStore() {
   const languages = new Datastore({
@@ -23,19 +14,6 @@ export function LanguagStore() {
   languages.ensureIndex({
     fieldName: 'language',
   });
-
-  languages
-    .findOne<boolean>({ seed: true })
-    .then(seeded => {
-      if (seeded) {
-        throw Error('AlreadySeeded');
-      }
-      return seedLanguages(languages);
-    })
-    .then(() => {
-      languages.insert({ alias: 'SEEDED', seed: true });
-    })
-    .catch(noop);
 
   return languages;
 }

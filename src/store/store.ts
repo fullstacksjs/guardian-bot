@@ -4,6 +4,8 @@ import { LanguagStore } from './language';
 import { SettingsStore } from './settings';
 import { UrlStore } from './url';
 import { GroupStore } from './groups';
+import { SeedStore } from './seed';
+import { seedDb } from './seeder';
 
 export function createStore(): Store {
   const store: Store = {
@@ -13,7 +15,10 @@ export function createStore(): Store {
     settings: SettingsStore(),
     urls: UrlStore(),
     groups: GroupStore(),
+    seed: SeedStore(),
   };
+
+  seedDb(store);
 
   return store;
 }
@@ -21,6 +26,7 @@ export function createStore(): Store {
 export const store = createStore();
 
 export interface Store {
+  seed: Datastore;
   users: Datastore;
   notes: Datastore;
   languages: Datastore;

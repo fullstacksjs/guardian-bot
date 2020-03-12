@@ -71,11 +71,22 @@ const highlight = ({ code, language }: Code) => (language ? hljs.highlight(langu
 const shotHandler: Middleware<Context> = async (ctx, next) => {
   const message = ctx.message?.reply_to_message;
 
+  if (!message) {
+    ctx.replyWithMarkdown(
+      '⭕️ **Wrong Usage**\nYou should reply this command on a message.\n`/shot [language] [filename]`',
+      {
+        reply_to_message_id: ctx.message.message_id,
+      },
+    );
+    return next();
+  }
+
   const pres = message?.entities?.filter(ent => isPre(ent));
 
   if (isNullOrEmpty(pres)) {
     ctx.replyWithMarkdown(
-      'I found no codeblock on your message, please wrap your code in 3 backticks (`) character and try again',
+      "⭕️ Can't find any codeblock in your message, please wrap your code in 3 backticks (\\`\\`\\`) character and try again.",
+      { reply_to_message_id: ctx.message.message_id },
     );
     return next();
   }
@@ -94,6 +105,9 @@ const shotHandler: Middleware<Context> = async (ctx, next) => {
       type: 'photo',
       media: { source: fs.createReadStream(shot) },
     })),
+    {
+      reply_to_message_id: message.message_id,
+    },
   );
 
   shots.forEach(shot => fs.promises.unlink(shot));
