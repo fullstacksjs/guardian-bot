@@ -1,6 +1,6 @@
 {
   "name": "fullstacks-tg-bot",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Telegram bot to manage developer groups",
   "main": "dist",
   "repository": {
@@ -28,27 +28,43 @@
     "lint": "eslint . --ext ts,tsx",
     "lint:fix": "yarn run lint --fix",
     "prebuild": "yarn run clean",
-    "build": "cross-env NODE_ENV=production tsc src",
+    "build": "tsc",
+    "postbuild": "shx cp -r src/assets/ dist/",
     "dev": "dotenv -- ts-node-dev --no-notify --respawn --transpileOnly ./src",
     "start": "dotenv node ."
   },
   "dependencies": {
+    "@frontendmonster/utils": "0.2.10",
+    "@types/dedent": "0.7.0",
+    "@typescript-eslint/typescript-estree": "2.22.0",
+    "dedent": "0.7.0",
     "dotenv-cli": "3.1.0",
-    "telegraf": "3.36.0"
+    "highlight.js": "9.18.1",
+    "micro-bot": "2.5.3",
+    "nedb-promises": "4.0.1",
+    "prettier": "1.19.1",
+    "puppeteer-core": "2.1.1",
+    "ramda": "0.27.0",
+    "tall": "3.0.0",
+    "telegraf-ts": "3.36.2"
   },
   "devDependencies": {
     "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
-    "@frontendmonster/eslint-config": "3.0.4",
+    "@frontendmonster/eslint-config": "3.0.5",
+    "@types/highlight.js": "9.12.3",
+    "@types/node": "13.9.0",
+    "@types/prettier": "1.19.0",
+    "@types/puppeteer-core": "2.0.0",
+    "@types/ramda": "0.26.43",
     "commitizen": "4.0.3",
     "cz-conventional-changelog": "3.1.0",
     "eslint": "6.8.0",
     "husky": "4.2.3",
     "lint-staged": "10.0.8",
-    "prettier": "1.19.1",
     "shx": "0.3.2",
     "ts-node-dev": "1.0.0-pre.44",
-    "typescript": "3.8.2"
+    "typescript": "3.8.3"
   },
   "config": {
     "commitizen": {

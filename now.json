@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "env": {
+    "TOKEN": "@fullstacks_bot_token",
+    "SUPER_USER_ID": "419793014",
+    "DEFAULT_TIMEOUT": "108000",
+    "NODE_ENV": "production"
+  }
+}

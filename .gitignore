@@ -40,3 +40,10 @@ report.*.json
 
 # Deadcodes
 /.deadcodes
+
+# DB
+/data
+
+package-lock.json
+
+.now

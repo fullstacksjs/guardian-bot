@@ -4,6 +4,8 @@
     "target": "ES2019",
     "outDir": "./dist",
     "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "lib": ["ES2020.String"],
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
@@ -15,8 +17,13 @@
     "skipLibCheck": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": false,
+    "typeRoots": [
+      "./@types/",
+      "./node_modules/@types/"
+    ]
   },
   "include": [
-    "./src"
+    "./src",
+    "./@types"
   ]
 }
