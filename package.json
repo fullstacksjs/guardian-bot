@@ -1,6 +1,6 @@
 {
   "name": "fullstacks-tg-bot",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Telegram bot to manage developer groups",
   "main": "dist",
   "repository": {
