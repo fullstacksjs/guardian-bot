@@ -11,12 +11,10 @@ const hashtagHandler: Middleware<Context> = async (ctx, next) => {
   const note = await ctx.db.notes.findOne<Note>({ title });
 
   if (!note) {
-    await ctx.reply(`${title} doesn't exist`, { reply_to_message_id: messageId });
-    return;
+    return next();
   }
 
-  await ctx.reply(note.title, { reply_to_message_id: messageId });
-  next();
+  return ctx.reply(note.note, { reply_to_message_id: messageId });
 };
 
 export default hashtagHandler;

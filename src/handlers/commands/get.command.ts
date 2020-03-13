@@ -20,7 +20,7 @@ const getHandler: Middleware<Context> = async ctx => {
     return;
   }
 
-  await ctx.reply(note.title, { reply_to_message_id: messageId });
+  await ctx.replyWithMarkdown(note.note, { reply_to_message_id: messageId });
 };
 
 export default getHandler;
