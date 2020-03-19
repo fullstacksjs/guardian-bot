@@ -1,16 +1,16 @@
 {
-  "name": "fullstacks-tg-bot",
+  "name": "guardian-bot",
   "version": "0.1.0",
   "description": "Telegram bot to manage developer groups",
   "main": "dist",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/full-stacks/fullstacks-tg-bot"
+    "url": "git+https://github.com/full-stacks/guardian-bot"
   },
   "bugs": {
-    "url": "https://github.com/full-stacks/fullstacks-tg-bot/issues"
+    "url": "https://github.com/full-stacks/guardian-bot/issues"
   },
-  "homepage": "https://github.com/full-stacks/fullstacks-tg-bot/",
+  "homepage": "https://github.com/full-stacks/guardian-bot/",
   "keywords": [
     "telegram",
     "bot",
