@@ -19,7 +19,7 @@ const getHtml = (code: string, language: string, filename: string) => `
       <pre class="editor" data-title="${filename || language}">
         <code class="hljs">${code}</code>
       </pre>
-      <footer class="footer">@full_stacks</footer>
+      <footer class="footer">Join us: @fullstacks</footer>
     </main>
   </body>
 </html>`;
@@ -27,7 +27,7 @@ const getHtml = (code: string, language: string, filename: string) => `
 const resolveOutput = (name: string) => `${path.resolve(process.cwd(), 'data', name)}.jpeg`;
 
 async function getShot(html: string, name: string) {
-  const config = { executablePath: process.env.CHROMIUM_PATH, args: ['--no-sandbox'] };
+  const config = { executablePath: process.env.CHROMIUM_PATH };
 
   const browser = await puppeteer.launch(config);
   const page = await browser.newPage();
@@ -94,7 +94,8 @@ const shotHandler: Middleware<Context> = async (ctx, next) => {
   const getShots = pres
     .map(pre => ctx.getEntityText(pre, message.text))
     .map(pre => ({ code: pre.trim(), language: ctx.language?.language, parser: ctx.language?.parser } as Code))
-    .map(code => highlight(format(code)))
+    .map(code => (ctx.entities.some(ent => ent.content === 'raw') ? code : format(code)))
+    .map(code => highlight(code))
     .map(hl => getHtml(hl.value, hl.language, ctx.entities[2]?.content))
     .map((template, index) => getShot(template, `${ctx.from.id}-${index}`));
 

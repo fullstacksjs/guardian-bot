@@ -104,7 +104,8 @@ body {
 }
 
 .editor {
-  max-width: 800px;
+  max-width: 600px;
+  min-width: 600px;
   position: relative;
 }
 
@@ -124,7 +125,7 @@ body {
   color: var(--fg);
   position: absolute;
   bottom: 25px;
-  font-family: Rajdhani;
+  font-family: 'DejaVu Sans Mono';
   opacity: 0.8;
 }
 
