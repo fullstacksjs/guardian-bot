@@ -3,11 +3,11 @@ import { Context } from '../../context';
 import { getUsername } from '../../utils';
 
 const logMemberEvents: Middleware<Context> = (ctx, next) => {
-  ctx.log('LogMemberEvents');
-
   if (!ctx.settings.debugChatId) {
     return next();
   }
+
+  ctx.log('LogMemberEvents');
 
   switch (ctx.updateSubTypes[0]) {
     case 'new_chat_members': {

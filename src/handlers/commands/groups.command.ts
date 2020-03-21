@@ -12,10 +12,7 @@ const groupsHandler: Middleware<Context> = (ctx, next) => {
     return;
   }
 
-  const groupNames = md.list(
-    groups.map(gp => getGroupname(gp)),
-    { map: md.code },
-  );
+  const groupNames = md.list(groups.map(gp => getGroupname(gp)));
 
   ctx.replyWithMarkdown(dedent`ℹ️ ${md.bold`Groups I manage:`}\n\n${groupNames}`, {
     reply_to_message_id: ctx.message.message_id,

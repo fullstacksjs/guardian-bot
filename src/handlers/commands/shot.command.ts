@@ -45,7 +45,7 @@ async function getShot(html: string, name: string) {
   const dest = resolveOutput(name);
   await page.screenshot({ path: dest, quality: 100 });
 
-  browser.close();
+  await browser.close();
   return dest;
 }
 
@@ -94,7 +94,7 @@ const shotHandler: Middleware<Context> = async (ctx, next) => {
   const getShots = pres
     .map(pre => ctx.getEntityText(pre, message.text))
     .map(pre => ({ code: pre.trim(), language: ctx.language?.language, parser: ctx.language?.parser } as Code))
-    .map(code => (ctx.entities.some(ent => ent.content === 'raw') ? code : format(code)))
+    .map(code => (ctx.getOption('raw') ? code : format(code)))
     .map(code => highlight(code))
     .map(hl => getHtml(hl.value, hl.language, ctx.entities[2]?.content))
     .map((template, index) => getShot(template, `${ctx.from.id}-${index}`));

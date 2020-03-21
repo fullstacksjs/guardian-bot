@@ -76,6 +76,10 @@ export class Context extends Telegraf.Context {
     return this.chat.type === 'supergroup' || this.chat.type === 'group';
   }
 
+  getOption(option: string) {
+    return this.entities.some(ent => ent.content === option);
+  }
+
   getEntityText(
     entity: Pick<ExtendedMessageEnity, 'offset' | 'length'>,
     message: string = this.message.text || this.message.caption,
