@@ -12,29 +12,28 @@
 
 ## Features
 
-- Code syntax highlighter
-- Captcha
-- Ban/Unban users
-- List all community groups and channels
-- Notes
+- 🖥 Code syntax highlighter
+- 🤖 Captcha
+- 🕴 Manage users
+- 🗒 Notes
 
 ## Commands
 
-| Command                    | Role     | Available at | Description                                            | Flags         |
-| -------------------------- | -------- | ------------ | ------------------------------------------------------ | ------------- |
-| `/del [reason]`            | Admin    | Everywhere   | Deletes replied-to message.                            |               |
-| `/ban <reason>`            | Admin    | Groups       | Bans the user from all groups.                         |               |
-| `/unban`                   | Admin    | Everywhere   | Removes the user from ban list.                        |               |
-| `/save <name>`             | Admin    | PM           | Save replied-to message as a note.                     |               |
-| `/update <name>`           | Admin    | PM           | Change a note to replied-to message.                   |               |
-| `/remove <name>`           | Admin    | PM           | Remove a note.                                         |               |
-| `/alias <language> <name>` | Admin    | PM           | Alias a language.                                      |               |
-| `/sync`                    | Admin    | Groups       | Sync group informations.                               |               |
-| `/aliass`                  | Everyone | Everywhere   | List all aliases.                                      |               |
-| `/get <name>`              | Everyone | Everywhere   | Retrive a note.                                        |               |
-| `/shot [language | alias]` | Everyone | Everywgere   | Syntax highlight all codeblocks in replied-to message. | filename, raw |
-| `/notes <name>`            | Everyone | Everywhere   | Show list of notes.                                    |               |
-| `/groups`                  | Everyone | Everywhere   | Shows a list of groups.                                |               |
+| Command                     | Role     | Available at | Description                                            | Flags           |
+| --------------------------- | -------- | ------------ | ------------------------------------------------------ | --------------- |
+| `/del [reason]`             | Admin    | Everywhere   | Deletes replied-to message.                            |                 |
+| `/ban <reason>`             | Admin    | Groups       | Bans the user from all groups.                         |                 |
+| `/unban`                    | Admin    | Everywhere   | Removes the user from ban list.                        |                 |
+| `/save <name>`              | Admin    | PM           | Save replied-to message as a note.                     |                 |
+| `/update <name>`            | Admin    | PM           | Change a note to replied-to message.                   |                 |
+| `/remove <name>`            | Admin    | PM           | Remove a note.                                         |                 |
+| `/alias <language> <name>`  | Admin    | PM           | Alias a language.                                      |                 |
+| `/sync`                     | Admin    | Groups       | Sync group informations.                               |                 |
+| `/aliass`                   | Everyone | Everywhere   | List all aliases.                                      |                 |
+| `/get <name>`               | Everyone | Everywhere   | Retrive a note.                                        |                 |
+| `/shot [language \| alias]` | Everyone | Everywhere   | Syntax highlight all codeblocks in replied-to message. | -filename, -raw |
+| `/notes <name>`             | Everyone | Everywhere   | Show list of notes.                                    |                 |
+| `/groups`                   | Everyone | Everywhere   | Shows a list of groups.                                |                 |
 
 ## Prerequisites
 
@@ -52,8 +51,6 @@ this bot.
 2. Create a bot via [@BotFather](https://t.me/BotFather) and grab a **token**.
 3. Copy `.env.example` to `.env` and edit it.
 4. Start bot via `docker-compose up`.
-
-- Github: [@full-stacks](https://github.com/full-stacks)
 
 ## Contributing
 
