@@ -12,7 +12,7 @@ export function SettingsStore() {
 export interface Settings {
   chatId: number;
   timeout?: number;
-  deleteDelay?: number | boolean;
+  deleteDelay?: number;
   debugChatId?: string | number;
   allowLinks?: boolean;
 }

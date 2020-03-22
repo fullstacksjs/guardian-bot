@@ -9,6 +9,12 @@ interface Document {
   updatedAt?: Date;
 }
 
+export const flagRegex = /(?:--?)(?<name>\w+)(?:=(?<value>\S*))?/;
+
+export function extractFlags(flags: string[]): [string, string][] {
+  return flags.map(flag => flag.match(flagRegex)).map(match => [match.groups.name, match.groups.value || 'true']);
+}
+
 export const isPre = R.propEq('type', 'pre');
 
 export const isNullOrEmpty = R.anyPass([R.isNil, R.isEmpty]);

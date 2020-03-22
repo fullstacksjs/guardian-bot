@@ -1,8 +1,8 @@
-import Telegraf, { AdminPermissions, MessageEntity, EntityType, Telegram, TOptions } from 'telegraf-ts';
-import R from 'ramda';
 import { randomInt } from '@frontendmonster/utils';
+import R from 'ramda';
+import Telegraf, { AdminPermissions, MessageEntity, EntityType, Telegram, TOptions } from 'telegraf-ts';
 import { store, Store, Settings, User, Url, Group, Language } from './store';
-import { giphy } from './utils';
+import { giphy, flagRegex, extractFlags } from './utils';
 
 interface Gif {
   gifs: string[];
@@ -10,7 +10,7 @@ interface Gif {
 }
 
 export interface ExtendedMessageEnity {
-  type: EntityType | 'text';
+  type: EntityType | 'text' | 'flag';
   offset: number;
   length: number;
   content?: string;
@@ -41,6 +41,7 @@ export class Context extends Telegraf.Context {
   };
 
   public entities: ExtendedMessageEnity[];
+  public flags: Map<string, string>;
   public db: Store = store;
   public settings: Settings;
   public user: User;
@@ -50,7 +51,9 @@ export class Context extends Telegraf.Context {
 
   constructor(update: any, telegram: Telegram, options: TOptions) {
     super(update, telegram, options);
-    this.entities = this.parseCommand();
+    const parsed = this.parseEntites();
+    this.entities = parsed.entities;
+    this.flags = parsed.flags;
   }
 
   getGroupLink(): string | Promise<string> {
@@ -76,10 +79,6 @@ export class Context extends Telegraf.Context {
     return this.chat.type === 'supergroup' || this.chat.type === 'group';
   }
 
-  getOption(option: string) {
-    return this.entities.some(ent => ent.content === option);
-  }
-
   getEntityText(
     entity: Pick<ExtendedMessageEnity, 'offset' | 'length'>,
     message: string = this.message.text || this.message.caption,
@@ -99,58 +98,74 @@ export class Context extends Telegraf.Context {
     return null;
   }
 
-  parseCommand() {
-    const extendedEntities = [];
-    const { message } = this;
-    const entities = message?.entities;
-
-    if (!entities) {
-      return null;
-    }
-
-    for (let cursor = 0; cursor < entities.length; cursor++) {
-      const current = entities[cursor];
-      const next = entities[cursor + 1];
-
-      extendedEntities.push({ ...current, content: this.getEntityText(current) });
-
-      const entityEnd = current.offset + current.length;
-      if (entityEnd === message.text.length) {
-        break;
-      }
-
-      if (next?.offset === entityEnd + 1) {
-        continue;
-      }
-
-      const to = next ? next.offset : message.text.length;
-      extendedEntities.push(...this.getTextEntities(entityEnd + 1, to));
-    }
-
-    return extendedEntities;
+  scheduleDeleteMessage(timeout?: number) {
+    setTimeout(this.deleteMessage, timeout ?? this.settings.deleteDelay ?? 1000);
   }
 
-  private getTextEntities(from: number, to: number) {
+  parseEntites() {
+    const { message } = this;
+    if (!message?.text) {
+      return {};
+    }
+
+    const entities: ExtendedMessageEnity[] = message?.entities || [];
+
+    const firstTextEntities =
+      entities[0] == null || entities[0]?.offset > 0
+        ? this.extractTextEntities(0, entities[0] ? entities[0].offset : message.text.length)
+        : [];
+
+    const followEntities = entities.reduce<ExtendedMessageEnity[]>((acc, ent, index) => {
+      const next = entities[index + 1];
+      const entityEnd = ent.offset + ent.length;
+      const needToParse = next?.offset !== entityEnd + 1;
+
+      const textEntities = needToParse
+        ? this.extractTextEntities(entityEnd + 1, next ? next.offset : message.text.length)
+        : [];
+
+      return [...acc, this.extendedEntity(ent), ...textEntities];
+    }, []);
+
+    const allEntities = [...firstTextEntities, ...followEntities];
+
+    return {
+      entities: allEntities.filter(ent => ent.type !== 'flag'),
+      flags: new Map<string, string>(
+        extractFlags(allEntities.filter(ent => ent.type === 'flag').map(ent => ent.content)),
+      ),
+    };
+  }
+
+  private extendedEntity({ type, offset, length }: ExtendedMessageEnity): ExtendedMessageEnity {
+    return {
+      offset,
+      length,
+      type,
+      content: this.getEntityText({ offset, length }),
+    };
+  }
+
+  private extractTextEntities(from: number, to: number): ExtendedMessageEnity[] {
     const text = this.getEntityText({ offset: from, length: to - from });
 
     const matchs = text.matchAll(/(\S+)/g);
 
-    const entities: ExtendedMessageEnity[] = [];
-
-    for (const match of matchs) {
+    return Array.from(matchs).map(match => {
       const range = {
         offset: match.index + from,
         length: match[0].length,
       };
 
-      entities.push({
-        ...range,
-        type: 'text',
-        content: this.getEntityText(range),
-      });
-    }
+      const rawContent = this.getEntityText(range);
+      const isFlag = rawContent.match(flagRegex);
 
-    return entities;
+      return {
+        ...range,
+        content: rawContent,
+        type: isFlag ? 'flag' : 'text',
+      };
+    });
   }
 
   replyWithRandomGif(gif: Gif) {
@@ -195,11 +210,11 @@ export class Context extends Telegraf.Context {
     this.logger.log('-------------------------');
   }
 
-  report(...args: any) {
-    this.logger.log('-------------------------');
-    this.logger.log();
-    this.logger.log(...args);
-    this.logger.log();
-    this.logger.log('-------------------------');
+  report(msg: string) {
+    if (!this.settings.debugChatId) {
+      return;
+    }
+
+    this.telegram.sendMessage(this.settings.debugChatId, msg);
   }
 }

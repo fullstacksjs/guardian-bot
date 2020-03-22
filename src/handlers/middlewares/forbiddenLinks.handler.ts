@@ -36,7 +36,4 @@ const forbiddenLinksHandler: Middleware<Context> = (ctx, next) => {
   return next();
 };
 
-export default Composer.optional<Context>(
-  ctx => ctx.isGroup && !ctx.isSuperUser && !ctx.isAdmin,
-  forbiddenLinksHandler,
-);
+export default Composer.optional<Context>(ctx => ctx.isGroup && !ctx.isAdmin, forbiddenLinksHandler);

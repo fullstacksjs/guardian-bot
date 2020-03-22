@@ -94,9 +94,9 @@ const shotHandler: Middleware<Context> = async (ctx, next) => {
   const getShots = pres
     .map(pre => ctx.getEntityText(pre, message.text))
     .map(pre => ({ code: pre.trim(), language: ctx.language?.language, parser: ctx.language?.parser } as Code))
-    .map(code => (ctx.getOption('raw') ? code : format(code)))
+    .map(code => (ctx.flags.get('raw') ? code : format(code)))
     .map(code => highlight(code))
-    .map(hl => getHtml(hl.value, hl.language, ctx.entities[2]?.content))
+    .map(hl => getHtml(hl.value, hl.language, ctx.flags.get('filename')))
     .map((template, index) => getShot(template, `${ctx.from.id}-${index}`));
 
   const shots = await Promise.all(getShots);

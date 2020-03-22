@@ -18,7 +18,7 @@ const addedToGroupHandler: Middleware<Context> = async (ctx, next) => {
   const link = await ctx.getGroupLink();
 
   if (!link) {
-    await ctx.replyWithHTML(dedent`⚠️ <b>I can't export chat invite link.</b>
+    await ctx.replyWithMarkdown(dedent`⚠️ **I can't export chat invite link.**
         make sure I am permitted to export chat invite link`);
   }
 
@@ -27,7 +27,7 @@ const addedToGroupHandler: Middleware<Context> = async (ctx, next) => {
   ctx.groups.push(newGroup);
   ctx.replyWithRandomGif(ctx.gifs.start);
 
-  next();
+  return next();
 };
 
 export default addedToGroupHandler;
