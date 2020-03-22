@@ -2,7 +2,8 @@ import { Composer } from 'telegraf-ts';
 import { Context } from '../../context';
 import languageLoader from '../loaders/language.loader';
 import aliasesHandler from './aliases.command';
-import aliasHandler from './alais.command';
+import aliasHandler from './alias.command';
+import delHandler from './del.command';
 import getHandler from './get.command';
 import groupsHandler from './groups.command';
 import hashtagHandler from './hashtag.command';
@@ -14,11 +15,13 @@ import shotHandler from './shot.command';
 import themesHandler from './themes.command';
 import unbanHandler from './unban.command';
 import updateHandler from './update.command';
+import syncHandler from './sync.command';
 
 const commands = new Composer<Context>();
 
 commands.command('alias', aliasHandler);
 commands.command('aliases', aliasesHandler);
+commands.command('del', delHandler);
 commands.command('get', getHandler);
 commands.command('groups', groupsHandler);
 commands.command('languages', languagesHandler);
@@ -29,6 +32,7 @@ commands.command('themes', themesHandler);
 commands.command('unban', unbanHandler);
 commands.command('update', updateHandler);
 commands.command('remove', removeHandler);
+commands.command('sync', syncHandler);
 commands.hashtag(/.*/, hashtagHandler);
 
 export default commands;
