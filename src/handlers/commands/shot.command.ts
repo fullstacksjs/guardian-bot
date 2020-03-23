@@ -27,7 +27,7 @@ const getHtml = (code: string, language: string, filename: string) => `
 const resolveOutput = (name: string) => `${path.resolve(process.cwd(), 'data', name)}.jpeg`;
 
 async function getShot(html: string, name: string) {
-  const config = { executablePath: process.env.CHROMIUM_PATH };
+  const config = { executablePath: process.env.CHROMIUM_PATH, args: ['--no-sandbox'] };
 
   const browser = await puppeteer.launch(config);
   const page = await browser.newPage();
