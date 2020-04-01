@@ -5,7 +5,13 @@ import { Seed } from './seed';
 
 function seedLanguages(db: Datastore) {
   return Promise.all(
-    hljs.listLanguages().map(lang => db.insert({ language: lang, alias: lang, parser: (parsers as any)[lang] })),
+    hljs.listLanguages().map(lang =>
+      db.insert({
+        language: lang,
+        alias: lang,
+        parser: (parsers as any)[lang],
+      }),
+    ),
   );
 }
 

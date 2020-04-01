@@ -1,6 +1,12 @@
 import { randomInt } from '@frontendmonster/utils';
 import R from 'ramda';
-import Telegraf, { AdminPermissions, MessageEntity, EntityType, Telegram, TOptions } from 'telegraf-ts';
+import Telegraf, {
+  AdminPermissions,
+  MessageEntity,
+  EntityType,
+  Telegram,
+  TOptions,
+} from 'telegraf-ts';
 import { store, Store, Settings, User, Url, Group, Language } from './store';
 import { giphy, flagRegex, extractFlags } from './utils';
 
@@ -62,7 +68,9 @@ export class Context extends Telegraf.Context {
       : this.exportChatInviteLink().catch(() => '');
   }
 
-  getTokens({ caseSensitive = false }: { caseSensitive?: boolean } = {}): string[] {
+  getTokens({
+    caseSensitive = false,
+  }: { caseSensitive?: boolean } = {}): string[] {
     const tokens = this.message?.text?.split(' ');
     if (!tokens || tokens?.length === 0) {
       return [];
@@ -99,7 +107,10 @@ export class Context extends Telegraf.Context {
   }
 
   scheduleDeleteMessage(timeout?: number) {
-    setTimeout(() => this.deleteMessage, timeout ?? this.settings.deleteDelay ?? 1000);
+    setTimeout(
+      () => this.deleteMessage,
+      timeout ?? this.settings.deleteDelay ?? 1000,
+    );
   }
 
   parseEntites() {
@@ -112,32 +123,49 @@ export class Context extends Telegraf.Context {
 
     const firstTextEntities =
       entities[0] == null || entities[0]?.offset > 0
-        ? this.extractTextEntities(0, entities[0] ? entities[0].offset : message.text.length)
+        ? this.extractTextEntities(
+            0,
+            entities[0] ? entities[0].offset : message.text.length,
+          )
         : [];
 
-    const followEntities = entities.reduce<ExtendedMessageEnity[]>((acc, ent, index) => {
-      const next = entities[index + 1];
-      const entityEnd = ent.offset + ent.length;
-      const needToParse = next?.offset !== entityEnd + 1;
+    const followEntities = entities.reduce<ExtendedMessageEnity[]>(
+      (acc, ent, index) => {
+        const next = entities[index + 1];
+        const entityEnd = ent.offset + ent.length;
+        const needToParse = next?.offset !== entityEnd + 1;
 
-      const textEntities = needToParse
-        ? this.extractTextEntities(entityEnd + 1, next ? next.offset : message.text.length)
-        : [];
+        const textEntities = needToParse
+          ? this.extractTextEntities(
+              entityEnd + 1,
+              next ? next.offset : message.text.length,
+            )
+          : [];
 
-      return [...acc, this.extendedEntity(ent), ...textEntities];
-    }, []);
+        return [...acc, this.extendedEntity(ent), ...textEntities];
+      },
+      [],
+    );
 
     const allEntities = [...firstTextEntities, ...followEntities];
 
     return {
       entities: allEntities.filter(ent => ent.type !== 'flag'),
       flags: new Map<string, string>(
-        extractFlags(allEntities.filter(ent => ent.type === 'flag').map(ent => ent.content)),
+        extractFlags(
+          allEntities
+            .filter(ent => ent.type === 'flag')
+            .map(ent => ent.content),
+        ),
       ),
     };
   }
 
-  private extendedEntity({ type, offset, length }: ExtendedMessageEnity): ExtendedMessageEnity {
+  private extendedEntity({
+    type,
+    offset,
+    length,
+  }: ExtendedMessageEnity): ExtendedMessageEnity {
     return {
       offset,
       length,
@@ -146,7 +174,10 @@ export class Context extends Telegraf.Context {
     };
   }
 
-  private extractTextEntities(from: number, to: number): ExtendedMessageEnity[] {
+  private extractTextEntities(
+    from: number,
+    to: number,
+  ): ExtendedMessageEnity[] {
     const text = this.getEntityText({ offset: from, length: to - from });
 
     const matchs = text.matchAll(/(\S+)/g);

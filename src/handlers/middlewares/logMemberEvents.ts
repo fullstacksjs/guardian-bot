@@ -16,7 +16,9 @@ const logMemberEvents: Middleware<Context> = async (ctx, next) => {
       break;
     }
     case 'left_chat_member': {
-      await ctx.report(`${getUsername(ctx.message.left_chat_member)} left ${ctx.chat.title}`);
+      await ctx.report(
+        `${getUsername(ctx.message.left_chat_member)} left ${ctx.chat.title}`,
+      );
       break;
     }
     default:

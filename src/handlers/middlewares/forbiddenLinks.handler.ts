@@ -26,11 +26,16 @@ const forbiddenLinksHandler: Middleware<Context> = async (ctx, next) => {
       const normilizedUrl = /https?:\/\//.test(url) ? url : `http://${url}`;
       return tall(normilizedUrl)
         .then((unshortenedUrl: string) => ctx.isForbiddenUrl(unshortenedUrl))
-        .then((isForbidden: boolean) => (isForbidden ? ctx.deleteMessage() : Promise.resolve(null)));
+        .then((isForbidden: boolean) =>
+          isForbidden ? ctx.deleteMessage() : Promise.resolve(null),
+        );
     }),
   );
 
   return next();
 };
 
-export default Composer.optional<Context>(ctx => ctx.isGroup && !ctx.isAdmin, forbiddenLinksHandler);
+export default Composer.optional<Context>(
+  ctx => ctx.isGroup && !ctx.isAdmin,
+  forbiddenLinksHandler,
+);

@@ -17,11 +17,15 @@ const saveHandler: Middleware<Context> = async ctx => {
 
   const note = await ctx.db.notes.findOne<Note>({ title });
   if (note) {
-    return ctx.replyWithMarkdown(`Note **${title}** already existed.`, { reply_to_message_id: messageId });
+    return ctx.replyWithMarkdown(`Note **${title}** already existed.`, {
+      reply_to_message_id: messageId,
+    });
   }
 
   const newNote = await ctx.db.notes.insert<Note>({ title, note: text });
-  return ctx.replyWithMarkdown(`Saved note **${newNote.title}**`, { reply_to_message_id: messageId });
+  return ctx.replyWithMarkdown(`Saved note **${newNote.title}**`, {
+    reply_to_message_id: messageId,
+  });
 };
 
 export default saveHandler;

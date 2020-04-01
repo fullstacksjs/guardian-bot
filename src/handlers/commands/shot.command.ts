@@ -24,15 +24,21 @@ const getHtml = (code: string, language: string, filename: string) => `
   </body>
 </html>`;
 
-const resolveOutput = (name: string) => `${path.resolve(process.cwd(), 'data', name)}.jpeg`;
+const resolveOutput = (name: string) =>
+  `${path.resolve(process.cwd(), 'data', name)}.jpeg`;
 
 async function getShot(html: string, name: string) {
-  const config = { executablePath: process.env.CHROMIUM_PATH, args: ['--no-sandbox'] };
+  const config = {
+    executablePath: process.env.CHROMIUM_PATH,
+    args: ['--no-sandbox'],
+  };
 
   const browser = await puppeteer.launch(config);
   const page = await browser.newPage();
   await page.setContent(html);
-  await page.addStyleTag({ path: path.resolve(__dirname, '../../assets/theme.css') });
+  await page.addStyleTag({
+    path: path.resolve(__dirname, '../../assets/theme.css'),
+  });
   const container = await page.$('#container');
 
   const clip = await page.evaluate(el => {
@@ -40,7 +46,10 @@ async function getShot(html: string, name: string) {
     return { height, width };
   }, container);
 
-  await page.setViewport({ width: Number(clip.width), height: Number(clip.height) });
+  await page.setViewport({
+    width: Number(clip.width),
+    height: Number(clip.height),
+  });
 
   const dest = resolveOutput(name);
   await page.screenshot({ path: dest, quality: 100 });
@@ -53,7 +62,10 @@ const format = (code: Code): Code => {
   try {
     return {
       ...code,
-      code: prettier.format(code.code, { parser: code.parser, ...(prettierConfig as prettier.Options) }),
+      code: prettier.format(code.code, {
+        parser: code.parser,
+        ...(prettierConfig as prettier.Options),
+      }),
     };
   } catch {
     return code;
@@ -66,7 +78,8 @@ interface Code {
   parser?: BuiltInParserName;
 }
 
-const highlight = ({ code, language }: Code) => (language ? hljs.highlight(language, code) : hljs.highlightAuto(code));
+const highlight = ({ code, language }: Code) =>
+  language ? hljs.highlight(language, code) : hljs.highlightAuto(code);
 
 const shotHandler: Middleware<Context> = async ctx => {
   const message = ctx.message?.reply_to_message;
@@ -91,7 +104,14 @@ const shotHandler: Middleware<Context> = async ctx => {
 
   const getShots = pres
     .map(pre => ctx.getEntityText(pre, message.text))
-    .map(pre => ({ code: pre.trim(), language: ctx.language?.language, parser: ctx.language?.parser } as Code))
+    .map(
+      pre =>
+        ({
+          code: pre.trim(),
+          language: ctx.language?.language,
+          parser: ctx.language?.parser,
+        } as Code),
+    )
     .map(code => (ctx.flags.get('raw') ? code : format(code)))
     .map(code => highlight(code))
     .map(hl => getHtml(hl.value, hl.language, ctx.flags.get('filename')))

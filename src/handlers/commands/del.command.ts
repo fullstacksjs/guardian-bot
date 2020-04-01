@@ -12,7 +12,9 @@ const delHandler: Middleware<Context> = async (ctx, next) => {
     .join(' ');
 
   if (!ctx.message.reply_to_message) {
-    await ctx.replyWithMarkdown("⭕️ **Wrong Usage**\nReply to a message you'd like to delete");
+    await ctx.replyWithMarkdown(
+      "⭕️ **Wrong Usage**\nReply to a message you'd like to delete",
+    );
     ctx.scheduleDeleteMessage();
     return;
   }

@@ -18,11 +18,19 @@ const updateHandler: Middleware<Context> = async ctx => {
   const note = await ctx.db.notes.findOne<Note>({ title });
 
   if (!note) {
-    return ctx.reply(`${title} doesn't exists`, { reply_to_message_id: messageID });
+    return ctx.reply(`${title} doesn't exists`, {
+      reply_to_message_id: messageID,
+    });
   }
 
-  const newNote = await ctx.db.notes.update<Note>({ title }, { $set: { note: text } }, { returnUpdatedDocs: true });
-  return ctx.reply(`Updated note ${newNote.title}`, { reply_to_message_id: messageID });
+  const newNote = await ctx.db.notes.update<Note>(
+    { title },
+    { $set: { note: text } },
+    { returnUpdatedDocs: true },
+  );
+  return ctx.reply(`Updated note ${newNote.title}`, {
+    reply_to_message_id: messageID,
+  });
 };
 
 export default updateHandler;

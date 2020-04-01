@@ -17,7 +17,10 @@ const timeoutHandler: Middleware<Context> = (ctx, next) => {
       }
       break;
     case 'callback_query':
-      if (ctx.callbackQuery.message && now - ctx.callbackQuery.message.date < timeout) {
+      if (
+        ctx.callbackQuery.message &&
+        now - ctx.callbackQuery.message.date < timeout
+      ) {
         return next();
       }
       break;

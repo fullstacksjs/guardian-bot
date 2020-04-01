@@ -9,14 +9,18 @@ const getHandler: Middleware<Context> = async ctx => {
   const [, title] = ctx.getTokens();
 
   if (!title) {
-    await ctx.replyWithMarkdown('Hold on, Let me show you how to use this command: \n`/get <title>`');
+    await ctx.replyWithMarkdown(
+      'Hold on, Let me show you how to use this command: \n`/get <title>`',
+    );
     return;
   }
 
   const note = await ctx.db.notes.findOne<Note>({ title });
 
   if (!note) {
-    await ctx.reply(`${title} doesn't exist`, { reply_to_message_id: messageId });
+    await ctx.reply(`${title} doesn't exist`, {
+      reply_to_message_id: messageId,
+    });
     return;
   }
 

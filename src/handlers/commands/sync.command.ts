@@ -29,7 +29,9 @@ const syncHandler: Middleware<Context> = async (ctx, next) => {
     { returnUpdatedDocs: true },
   );
 
-  await ctx.replyWithMarkdown(`✅ The "[${group.title}](${group.link})" ${group.type} synced successfully.`);
+  await ctx.replyWithMarkdown(
+    `✅ The "[${group.title}](${group.link})" ${group.type} synced successfully.`,
+  );
 
   return next();
 };

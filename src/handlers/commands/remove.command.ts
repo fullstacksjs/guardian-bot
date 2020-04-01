@@ -15,10 +15,14 @@ const removeHandler: Middleware<Context> = async ctx => {
   const count = await ctx.db.notes.remove({ title }, {});
 
   if (count === 0) {
-    return ctx.replyWithMarkdown(`⚠ Note ${md.code(title)} not fonud`, { reply_to_message_id: messageID });
+    return ctx.replyWithMarkdown(`⚠ Note ${md.code(title)} not fonud`, {
+      reply_to_message_id: messageID,
+    });
   }
 
-  return ctx.replyWithMarkdown(`✅ Note ${md.code(title)} Removed`, { reply_to_message_id: messageID });
+  return ctx.replyWithMarkdown(`✅ Note ${md.code(title)} Removed`, {
+    reply_to_message_id: messageID,
+  });
 };
 
 export default removeHandler;

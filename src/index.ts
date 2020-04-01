@@ -16,7 +16,9 @@ const webhook =
 bot.catch((err: Error) => config.logger.error('🤖: Unhandled error', err));
 bot
   .launch({ webhook })
-  .then(() => config.logger.log(`NODE_ENV: ${process.env.NODE_ENV}\n🤖: Bot started`))
+  .then(() =>
+    config.logger.log(`NODE_ENV: ${process.env.NODE_ENV}\n🤖: Bot started`),
+  )
   .catch(console.error);
 
 process.on('unhandledRejection', console.error);

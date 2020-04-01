@@ -13,11 +13,18 @@ const captchaHandler: Middleware<Context> = async (ctx, next) => {
     return;
   }
 
-  const user = await findOrCreate<User>(ctx.db.users, { id: newUser.id }, { id: newUser.id, status: 'restricted' });
+  const user = await findOrCreate<User>(
+    ctx.db.users,
+    { id: newUser.id },
+    { id: newUser.id, status: 'restricted' },
+  );
 
   if (ctx.from.is_bot) {
     await ctx.kickChatMember(newUser.id);
-    await ctx.db.users.update<User>({ id: user.id }, { $set: { status: 'banned' } });
+    await ctx.db.users.update<User>(
+      { id: user.id },
+      { $set: { status: 'banned' } },
+    );
     return;
   }
 
@@ -25,7 +32,10 @@ const captchaHandler: Middleware<Context> = async (ctx, next) => {
     await ctx.restrictChatMember(newUser.id);
   }
 
-  await ctx.db.users.update<User>({ id: user.id }, { $set: { status: 'restricted' } });
+  await ctx.db.users.update<User>(
+    { id: user.id },
+    { $set: { status: 'restricted' } },
+  );
   await ctx.reply(`Hey, ${getUsername(ctx.from)}. Are you a 🤖?`, {
     reply_markup: Markup.inlineKeyboard([
       Markup.callbackButton('No', `no-${newUser.id}`),
