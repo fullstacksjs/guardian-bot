@@ -18,6 +18,7 @@ export function createStore(): Store {
     seed: SeedStore(),
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   seedDb(store);
 
   return store;

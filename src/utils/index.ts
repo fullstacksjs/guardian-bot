@@ -1,4 +1,5 @@
 import path from 'path';
+import { promisify } from 'util';
 import R from 'ramda';
 import { User } from 'telegraf-ts';
 import { Group } from '../store';
@@ -12,7 +13,7 @@ interface Document {
 export const flagRegex = /(?:--?)(?<name>\w+)(?:=(?<value>\S*))?/;
 
 export function extractFlags(flags: string[]): [string, string][] {
-  return flags.map(flag => flag.match(flagRegex)).map(match => [match.groups.name, match.groups.value || 'true']);
+  return flags.map(flag => flagRegex.exec(flag)).map(match => [match.groups.name, match.groups.value || 'true']);
 }
 
 export const isPre = R.propEq('type', 'pre');
@@ -21,9 +22,9 @@ export const isNullOrEmpty = R.anyPass([R.isNil, R.isEmpty]);
 
 export const ROOT = path.resolve(path.dirname(require.main.filename), '..');
 
-export const resolveRoot = (...routes: string[]) => path.resolve(ROOT, ...routes);
+export const resolveRoot = (...routes: string[]): string => path.resolve(ROOT, ...routes);
 
-export const resolveModule = (...routes: string[]) => resolveRoot('node_modules', ...routes);
+export const resolveModule = (...routes: string[]): string => resolveRoot('node_modules', ...routes);
 
 export async function findOrCreate<T>(model: Datastore, query: any, data: T): Promise<T & Document> {
   const resource = await model.findOne<T>(query);
@@ -57,3 +58,5 @@ export const getGroupname = (group: Group) => {
 
   return name;
 };
+
+export const sleep = promisify(setTimeout);

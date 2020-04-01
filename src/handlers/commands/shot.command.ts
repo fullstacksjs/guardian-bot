@@ -68,27 +68,25 @@ interface Code {
 
 const highlight = ({ code, language }: Code) => (language ? hljs.highlight(language, code) : hljs.highlightAuto(code));
 
-const shotHandler: Middleware<Context> = async (ctx, next) => {
+const shotHandler: Middleware<Context> = async ctx => {
   const message = ctx.message?.reply_to_message;
 
   if (!message) {
-    ctx.replyWithMarkdown(
+    return ctx.replyWithMarkdown(
       '⭕️ **Wrong Usage**\nYou should reply this command on a message.\n`/shot [language] [filename]`',
       {
         reply_to_message_id: ctx.message.message_id,
       },
     );
-    return next();
   }
 
   const pres = message?.entities?.filter(ent => isPre(ent));
 
   if (isNullOrEmpty(pres)) {
-    ctx.replyWithMarkdown(
+    return ctx.replyWithMarkdown(
       "⭕️ Can't find any codeblock in your message, please wrap your code in 3 backticks (\\`\\`\\`) character and try again.",
       { reply_to_message_id: ctx.message.message_id },
     );
-    return next();
   }
 
   const getShots = pres
@@ -111,7 +109,7 @@ const shotHandler: Middleware<Context> = async (ctx, next) => {
     },
   );
 
-  shots.forEach(shot => fs.promises.unlink(shot));
+  return Promise.all(shots.map(shot => fs.promises.unlink(shot)));
 };
 
 export default shotHandler;

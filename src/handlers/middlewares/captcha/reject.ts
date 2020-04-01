@@ -7,12 +7,11 @@ export const onReject: Middleware<Context> = async ctx => {
   const userId = Number(data.split('-')[1]);
 
   if (!(await ctx.can('can_restrict_members'))) {
-    ctx.replyWithRandomGif(ctx.gifs.unAuthorized);
-    return;
+    return ctx.replyWithRandomGif(ctx.gifs.unAuthorized);
   }
 
   await ctx.editMessageText('Kicked');
   await ctx.db.users.update<User>({ id: userId }, { $set: { status: 'ban' } });
   await ctx.telegram.kickChatMember(message.chat.id, userId);
-  ctx.deleteMessage();
+  return ctx.deleteMessage();
 };

@@ -6,6 +6,7 @@ export function NoteStore() {
     filename: 'data/Notes.db',
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   notes.ensureIndex({
     fieldName: 'title',
     unique: true,

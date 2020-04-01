@@ -6,6 +6,7 @@ export function UrlStore() {
     filename: 'data/Urls.db',
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   urls.ensureIndex({
     fieldName: 'pattern',
     unique: true,

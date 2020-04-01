@@ -25,7 +25,7 @@ const addedToGroupHandler: Middleware<Context> = async (ctx, next) => {
   const { id, title, type } = ctx.chat;
   const newGroup = await ctx.db.groups.insert<Group>({ id, link, title, type });
   ctx.groups.push(newGroup);
-  ctx.replyWithRandomGif(ctx.gifs.start);
+  await ctx.replyWithRandomGif(ctx.gifs.start);
 
   return next();
 };

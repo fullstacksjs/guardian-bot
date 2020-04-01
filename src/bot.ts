@@ -13,7 +13,7 @@ export function Bot({ token }: BotConfig) {
   bot.use(commands);
 
   bot.catch((err: any, ctx) => {
-    ctx.report(err);
+    void ctx.report(err);
   });
 
   return bot;

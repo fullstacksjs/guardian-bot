@@ -6,6 +6,7 @@ export function UserStore() {
     filename: 'data/Users.db',
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   users.ensureIndex({
     fieldName: 'id',
     unique: true,

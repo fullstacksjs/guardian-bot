@@ -6,11 +6,13 @@ export function LanguagStore() {
     filename: 'data/Languages.db',
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   languages.ensureIndex({
     fieldName: 'alias',
     unique: true,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   languages.ensureIndex({
     fieldName: 'language',
   });

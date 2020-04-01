@@ -7,6 +7,7 @@ export function GroupStore() {
     filename: 'data/Groups.db',
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   group.ensureIndex({
     fieldName: 'id',
     unique: true,

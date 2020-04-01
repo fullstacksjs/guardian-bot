@@ -2,7 +2,7 @@ import { MessageEntity, Middleware, Composer } from 'telegraf-ts';
 import { tall } from 'tall';
 import { Context } from '../../context';
 
-const forbiddenLinksHandler: Middleware<Context> = (ctx, next) => {
+const forbiddenLinksHandler: Middleware<Context> = async (ctx, next) => {
   const message = ctx.editedMessage || ctx.message;
 
   if (!message || ctx.settings.allowLinks) {
@@ -15,23 +15,20 @@ const forbiddenLinksHandler: Middleware<Context> = (ctx, next) => {
     ? [...message.entities, ...message.caption_entities]
     : [...message.entities];
 
-  entities.forEach(async entity => {
-    const url: string = ctx.getUrlFromEntity(entity);
+  await Promise.all(
+    entities.map(entity => {
+      const url: string = ctx.getUrlFromEntity(entity);
 
-    if (!url) {
-      return;
-    }
+      if (!url) {
+        return Promise.resolve(null);
+      }
 
-    const normilizedUrl = /https?:\/\//.test(url) ? url : `http://${url}`;
-    const unshortenedUrl = await tall(normilizedUrl);
-    if (!unshortenedUrl) {
-      return;
-    }
-
-    if (!ctx.isForbiddenUrl(unshortenedUrl)) {
-      ctx.deleteMessage();
-    }
-  });
+      const normilizedUrl = /https?:\/\//.test(url) ? url : `http://${url}`;
+      return tall(normilizedUrl)
+        .then((unshortenedUrl: string) => ctx.isForbiddenUrl(unshortenedUrl))
+        .then((isForbidden: boolean) => (isForbidden ? ctx.deleteMessage() : Promise.resolve(null)));
+    }),
+  );
 
   return next();
 };

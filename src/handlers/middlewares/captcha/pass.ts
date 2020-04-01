@@ -7,7 +7,7 @@ export const onPass: Middleware<Context> = async ctx => {
   const userId = Number(data.split('-')[1]);
 
   if (from.id !== userId) {
-    return;
+    return undefined;
   }
 
   await ctx.db.users.update({ id: from.id }, { $set: { status: 'member' } });
@@ -21,5 +21,5 @@ export const onPass: Middleware<Context> = async ctx => {
     });
   }
 
-  ctx.deleteMessage();
+  return ctx.deleteMessage();
 };

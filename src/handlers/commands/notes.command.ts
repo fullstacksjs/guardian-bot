@@ -10,11 +10,10 @@ const notesHandler: Middleware<Context> = async ctx => {
   const notes = await ctx.db.notes.find<Note>({});
 
   if (notes.length <= 0) {
-    ctx.reply('There is no note', { reply_to_message_id: messageID });
-    return;
+    return ctx.reply('There is no note', { reply_to_message_id: messageID });
   }
 
-  await ctx.replyWithMarkdown(
+  return ctx.replyWithMarkdown(
     `List of notes:\n${md.list(
       notes.map(n => n.title),
     )}\nYou can retrieve these notes by using: \n\`/get notename\` or\n \`#notename\``,

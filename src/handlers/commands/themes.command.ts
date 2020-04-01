@@ -4,12 +4,12 @@ import { Middleware } from 'telegraf-ts';
 import { Context } from '../../context';
 import { resolveModule } from '../../utils';
 
-const themesHandler: Middleware<Context> = ctx => {
+const themesHandler: Middleware<Context> = async ctx => {
   const themesDir = resolveModule('highlight.js/styles');
   const themeFiles = fs.readdirSync(themesDir);
   const themes = themeFiles.map(theme => path.parse(theme).name);
 
-  ctx.reply(themes.join('\n'));
+  await ctx.reply(themes.join('\n'));
 };
 
 export default themesHandler;

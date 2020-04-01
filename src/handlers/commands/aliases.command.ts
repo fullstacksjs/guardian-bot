@@ -11,12 +11,11 @@ const aliasesHandler: Middleware<Context> = async ctx => {
   });
 
   if (!languages.length) {
-    ctx.replyWithMarkdown(`You have no alias. try to create one with\n${md.code('/alias <language> <alias>')}`);
-    return;
+    return ctx.replyWithMarkdown(`You have no alias. try to create one with\n${md.code('/alias <language> <alias>')}`);
   }
 
   const aliases = languages.map(l => md.code(`${l.alias} -> ${l.language}`));
-  ctx.replyWithMarkdown(`**Aliases**:\n\n${aliases.join('\n')}`);
+  return ctx.replyWithMarkdown(`**Aliases**:\n\n${aliases.join('\n')}`);
 };
 
 export default aliasesHandler;

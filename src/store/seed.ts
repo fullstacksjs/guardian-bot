@@ -7,6 +7,7 @@ export function SeedStore() {
     filename: 'data/Seed.db',
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   seed.ensureIndex({
     fieldName: 'store',
     unique: true,

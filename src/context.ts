@@ -99,7 +99,7 @@ export class Context extends Telegraf.Context {
   }
 
   scheduleDeleteMessage(timeout?: number) {
-    setTimeout(this.deleteMessage, timeout ?? this.settings.deleteDelay ?? 1000);
+    setTimeout(() => this.deleteMessage, timeout ?? this.settings.deleteDelay ?? 1000);
   }
 
   parseEntites() {
@@ -158,7 +158,7 @@ export class Context extends Telegraf.Context {
       };
 
       const rawContent = this.getEntityText(range);
-      const isFlag = rawContent.match(flagRegex);
+      const isFlag = flagRegex.exec(rawContent);
 
       return {
         ...range,
@@ -169,7 +169,7 @@ export class Context extends Telegraf.Context {
   }
 
   replyWithRandomGif(gif: Gif) {
-    this.replyWithVideo(gif.gifs[randomInt({ max: gif.gifs.length })], {
+    return this.replyWithVideo(gif.gifs[randomInt({ max: gif.gifs.length })], {
       caption: gif.caption,
       reply_to_message_id: this.message.message_id,
     });
@@ -212,9 +212,9 @@ export class Context extends Telegraf.Context {
 
   report(msg: string) {
     if (!this.settings.debugChatId) {
-      return;
+      return false;
     }
 
-    this.telegram.sendMessage(this.settings.debugChatId, msg);
+    return this.telegram.sendMessage(this.settings.debugChatId, msg);
   }
 }
