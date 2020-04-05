@@ -15,4 +15,5 @@ export interface Settings {
   deleteDelay?: number;
   debugChatId?: string | number;
   allowLinks?: boolean;
+  cacheTime?: number;
 }

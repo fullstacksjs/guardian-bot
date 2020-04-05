@@ -84,7 +84,7 @@ export class Context extends Telegraf.Context {
   }
 
   get isGroup() {
-    return this.chat.type === 'supergroup' || this.chat.type === 'group';
+    return this.chat?.type === 'supergroup' || this.chat?.type === 'group';
   }
 
   getEntityText(

@@ -43,6 +43,8 @@ report.*.json
 
 # DB
 /data
+/public
+/keys
 
 package-lock.json
 
