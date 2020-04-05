@@ -16,8 +16,6 @@ const webhook =
 
 config.logger.log(`⚠️ : NODE_ENV: ${process.env.NODE_ENV}`);
 
-console.log(webhook);
-
 const bot = Bot(config);
 bot.catch((err: Error) => config.logger.error('🤖: Unhandled error', err));
 
@@ -28,15 +26,16 @@ if (!fs.existsSync(config.staticPath)) {
 }
 
 app.use(express.static(config.staticPath));
-app.use(bot.webhookCallback(config.hookPath));
-void bot.telegram.setWebhook(
-  `https://${config.host}:${config.port}/${config.hookPath}`,
-);
+app.use(bot.webhookCallback(`/${config.hookPath}`));
 
 const server = https.createServer({ key: config.key, cert: config.cert }, app);
-server.listen(config.port, config.host, () =>
-  config.logger.log('🤖: Bot started'),
-);
+server.listen(config.port, () => {
+  config.logger.log('🤖: Bot started');
+  const path = `https://${config.host}:${config.port}/${config.hookPath}`;
+  config.logger.log(path);
+  void bot.telegram.setWebhook(path);
+  // .catch(e => console.error(e))
+});
 
 // bot
 //   .launch({ webhook })
