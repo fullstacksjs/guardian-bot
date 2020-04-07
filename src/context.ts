@@ -80,7 +80,8 @@ export class Context extends Telegraf.Context {
   }
 
   get isSuperUser() {
-    return this.from.id === parseInt(process.env.SUPER_USER_ID, 10);
+    const from = this.callbackQuery?.from?.id ?? this.from?.id;
+    return from === parseInt(process.env.SUPER_USER_ID, 10);
   }
 
   get isGroup() {

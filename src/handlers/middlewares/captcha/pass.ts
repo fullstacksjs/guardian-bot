@@ -6,14 +6,14 @@ export const onPass: Middleware<Context> = async ctx => {
 
   const userId = Number(data.split('-')[1]);
 
-  if (from.id !== userId) {
+  if (from.id !== userId && !ctx.isAdmin) {
     return undefined;
   }
 
-  await ctx.db.users.update({ id: from.id }, { $set: { status: 'member' } });
+  await ctx.db.users.update({ id: userId }, { $set: { status: 'member' } });
 
   if (ctx.chat.type === 'supergroup') {
-    await ctx.restrictChatMember(from.id, {
+    await ctx.restrictChatMember(userId, {
       can_send_other_messages: true,
       can_add_web_page_previews: true,
       can_send_media_messages: true,
