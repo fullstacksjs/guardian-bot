@@ -20,6 +20,7 @@ const aliasHandler: Middleware<Context> = async ctx => {
   await createOrUpdate<Language>(
     ctx.db.languages,
     { alias },
+    { $set: { language } },
     { alias, language },
   );
 

@@ -47,12 +47,13 @@ export async function findOrCreate<T>(
 export async function createOrUpdate<T>(
   model: Datastore,
   query: any,
+  update: any,
   data: T,
 ): Promise<T & Document> {
   const resource = await model.findOne<T>(query);
 
   return resource
-    ? model.update<T>(query, data, { returnUpdatedDocs: true })
+    ? model.update<T>(query, update, { returnUpdatedDocs: true })
     : model.insert<T>(data);
 }
 

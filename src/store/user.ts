@@ -15,7 +15,14 @@ export function UserStore() {
   return users;
 }
 
+export type UserRole =
+  | 'admin'
+  | 'restricted'
+  | 'banned'
+  | 'member'
+  | 'superuser';
+
 export interface User {
   id: number;
-  status?: 'admin' | 'restricted' | 'banned' | 'member';
+  status?: UserRole;
 }

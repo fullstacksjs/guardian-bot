@@ -3,10 +3,12 @@ import { Context } from './context';
 import { BotConfig } from './config';
 import middlewares from './handlers/middlewares';
 import commands from './handlers/commands';
-import { monkeyPatch } from './utils/telegraf';
+import { monkeyPatch, syncSuperuser } from './utils/telegraf';
 
 export function Bot({ token }: BotConfig) {
   const bot = new Telegraf<Context>(token, { contextType: Context });
+
+  void syncSuperuser();
 
   bot.use(monkeyPatch);
   bot.use(middlewares);

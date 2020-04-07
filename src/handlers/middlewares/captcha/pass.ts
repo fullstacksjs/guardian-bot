@@ -6,7 +6,8 @@ export const onPass: Middleware<Context> = async ctx => {
 
   const userId = Number(data.split('-')[1]);
 
-  if (from.id !== userId && !ctx.isAdmin) {
+  const senderRole = await ctx.getUserRole(from.id);
+  if (from.id !== userId && senderRole !== 'superuser') {
     return undefined;
   }
 

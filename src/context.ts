@@ -9,6 +9,7 @@ import Telegraf, {
 } from 'telegraf-ts';
 import { store, Store, Settings, User, Url, Group, Language } from './store';
 import { giphy, flagRegex, extractFlags } from './utils';
+import { UserRole } from './store/user';
 
 interface Gif {
   gifs: string[];
@@ -80,12 +81,17 @@ export class Context extends Telegraf.Context {
   }
 
   get isSuperUser() {
-    const from = this.callbackQuery?.from?.id ?? this.from?.id;
-    return from === parseInt(process.env.SUPER_USER_ID, 10);
+    return this.user.status === 'superuser';
   }
 
   get isGroup() {
     return this.chat.type === 'supergroup' || this.chat.type === 'group';
+  }
+
+  async getUserRole(id: number): Promise<UserRole> {
+    const user = await this.db.users.findOne<User>({ id });
+
+    return user.status;
   }
 
   getEntityText(
