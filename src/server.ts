@@ -1,5 +1,5 @@
 import fs from 'fs';
-import https from 'https';
+import http from 'http';
 import express from 'express';
 import Telegraf from 'telegraf-ts';
 import { config } from './config';
@@ -16,20 +16,15 @@ export function Server(bot: Telegraf<any>) {
   app.use(express.static(config.staticPath));
   app.use(bot.webhookCallback(`/${config.hookPath}`));
 
-  const server = https.createServer(
-    { key: config.key, cert: config.cert },
-    app,
-  );
+  const server = http.createServer(app);
 
   return {
     lunch() {
       return new Promise((resolve, reject) => {
-        server.listen(config.port, () => {
+        server.listen(8080, () => {
           const path = `https://${config.host}:${config.port}/${config.hookPath}`;
           bot.telegram
-            .setWebhook(path, {
-              source: config.cert,
-            })
+            .setWebhook(path)
             .then(() => resolve(config))
             .catch(reject);
         });
