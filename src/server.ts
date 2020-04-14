@@ -27,7 +27,7 @@ export function Server(bot: Telegraf<any>) {
         server.listen(config.port, () => {
           const path = `https://${config.host}:${config.port}/${config.hookPath}`;
           bot.telegram
-            .setWebhook(path)
+            .setWebhook(path, { source: fs.readFileSync('../keys/cert.pem') })
             .then(() => resolve(config))
             .catch(reject);
         });
