@@ -9,6 +9,5 @@ services:
       - ${PORT}:${PORT}
     volumes:
       - data:/app/data
-      - ./keys:/app/keys
 volumes:
   data:
