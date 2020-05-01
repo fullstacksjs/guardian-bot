@@ -49,3 +49,5 @@ report.*.json
 package-lock.json
 
 .now
+
+nginx/conf.d/bot.conf

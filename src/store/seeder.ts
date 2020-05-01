@@ -1,5 +1,5 @@
 import hljs from 'highlight.js';
-import parsers from '../assets/parsers.json';
+import parsers from '../assets/parsers';
 import { Store } from './store';
 import { Seed } from './seed';
 

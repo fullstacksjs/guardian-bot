@@ -64,7 +64,7 @@ async function takeScreenshot(code: Code): Promise<string> {
     height: Number(clip.height),
   });
 
-  const dest = resolveOutput(code.filename + randomInt());
+  const dest = resolveOutput(`${code.filename}${randomInt()}`);
   await page.screenshot({ path: dest, quality: 100 });
 
   await browser.close();

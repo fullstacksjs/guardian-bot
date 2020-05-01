@@ -7,7 +7,10 @@ import { monkeyPatch } from './utils/telegraf';
 import inline from './handlers/inline.handler';
 
 export function Bot({ token }: BotConfig) {
-  const bot = new Telegraf<Context>(token, { contextType: Context });
+  const bot = new Telegraf<Context>(token, {
+    contextType: Context,
+    telegram: { webhookReply: false },
+  });
 
   bot.use(monkeyPatch);
   bot.use(middlewares);

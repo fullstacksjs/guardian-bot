@@ -1,4 +1,4 @@
-import fs from 'fs';
+// import fs from 'fs';
 import { Middleware } from 'telegraf-ts';
 import { Context } from '../../context';
 import { isPre, isNullOrEmpty } from '../../utils';
@@ -41,17 +41,17 @@ const shotHandler: Middleware<Context> = async ctx => {
 
   const shots = await Promise.all(codes);
 
-  await ctx.replyWithMediaGroup(
+  return ctx.replyWithMediaGroup(
     shots.map(shot => ({
       type: 'photo',
-      media: { source: fs.createReadStream(shot) },
+      media: { source: shot },
     })),
     {
       reply_to_message_id: message.message_id,
     },
   );
 
-  return Promise.all(shots.map(shot => fs.promises.unlink(shot)));
+  // return Promise.all(shots.map(shot => fs.promises.unlink(shot)));
 };
 
 export default shotHandler;

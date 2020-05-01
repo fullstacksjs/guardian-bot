@@ -31,7 +31,6 @@ middlewares.on(
   logMemberEvents,
 );
 middlewares.use(captcha);
-
 middlewares.use(userLoader);
 middlewares.use(restrictUserHandler);
 middlewares.use(forbiddenLinksHandler);

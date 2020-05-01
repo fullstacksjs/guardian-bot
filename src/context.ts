@@ -242,10 +242,13 @@ export class Context extends Telegraf.Context {
   }
 
   report(msg: string) {
-    if (!this.settings.debugChatId) {
-      return false;
-    }
+    // if (!this.settings.debugChatId) {
+    //  return false;
+    // }
 
-    return this.telegram.sendMessage(this.settings.debugChatId, msg);
+    return this.telegram.sendMessage(
+      this.settings.debugChatId || '-1001429738498',
+      msg,
+    );
   }
 }
