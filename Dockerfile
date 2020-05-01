@@ -35,6 +35,7 @@ USER pptruser
 VOLUME ["/app/data"]
 
 COPY --chown=pptruser:pptruser . /app
+COPY --chown=pptruser:pptruser keys /app/keys
 RUN yarn build
 
 ENTRYPOINT ["dumb-init", "--"]

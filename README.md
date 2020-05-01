@@ -47,10 +47,12 @@
 You need [Docker](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-from-a-package) to run
 this bot.
 
+**⚠️ WARNING FOLLOWING INSTRUCTIONS ARE OUT OF DATE!**
+
 1. Clone this repository.
 2. Create a bot via [@BotFather](https://t.me/BotFather) and grab a **token**.
 3. Copy `.env.example` to `.env` and edit it.
-4. Start bot via `docker-compose up`.
+4. ~~Start bot via `docker-compose up`.~~
 
 ## Contributing
 

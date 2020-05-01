@@ -43,7 +43,11 @@ report.*.json
 
 # DB
 /data
+/public
+/keys
 
 package-lock.json
 
 .now
+
+nginx/conf.d/bot.conf

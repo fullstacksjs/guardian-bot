@@ -85,7 +85,7 @@ export class Context extends Telegraf.Context {
   }
 
   get isGroup() {
-    return this.chat.type === 'supergroup' || this.chat.type === 'group';
+    return this.chat?.type === 'supergroup' || this.chat?.type === 'group';
   }
 
   async getUserRole(id: number): Promise<UserRole> {
@@ -249,10 +249,13 @@ export class Context extends Telegraf.Context {
   }
 
   report(msg: string) {
-    if (!this.settings.debugChatId) {
-      return false;
-    }
+    // if (!this.settings.debugChatId) {
+    //  return false;
+    // }
 
-    return this.telegram.sendMessage(this.settings.debugChatId, msg);
+    return this.telegram.sendMessage(
+      this.settings.debugChatId || '-1001429738498',
+      msg,
+    );
   }
 }
