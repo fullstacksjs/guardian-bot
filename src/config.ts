@@ -13,9 +13,9 @@ export const config: BotConfig = {
 };
 
 export interface Logger {
-  log(...args: any): void;
-  warn(...args: any): void;
-  error(...args: any): void;
+  log: (...args: any) => void;
+  warn: (...args: any) => void;
+  error: (...args: any) => void;
 }
 
 export interface BotConfig {

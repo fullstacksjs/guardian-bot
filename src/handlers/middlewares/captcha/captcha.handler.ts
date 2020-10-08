@@ -9,8 +9,7 @@ const captchaHandler: Middleware<Context> = async (ctx, next) => {
   const newUser = new_chat_members.find(member => member.id === from.id);
 
   if (!newUser) {
-    next();
-    return;
+    return next();
   }
 
   const user = await findOrCreate<User>(
@@ -43,7 +42,7 @@ const captchaHandler: Middleware<Context> = async (ctx, next) => {
     ]),
   });
 
-  next();
+  return next();
 };
 
 export default captchaHandler;

@@ -12,7 +12,7 @@ const settingsLoader: Middleware<Context> = async (ctx, next) => {
 
   ctx.settings = settings;
 
-  next();
+  return next();
 };
 
 export default settingsLoader;

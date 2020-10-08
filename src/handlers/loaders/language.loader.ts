@@ -8,7 +8,7 @@ const languageLoader: Middleware<Context> = async (ctx, next) => {
     alias: alias?.content,
   });
 
-  next();
+  return next();
 };
 
 export default languageLoader;

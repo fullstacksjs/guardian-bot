@@ -7,7 +7,7 @@ const groupsLoader: Middleware<Context> = async (ctx, next) => {
 
   ctx.groups = groups;
 
-  next();
+  return next();
 };
 
 export default groupsLoader;

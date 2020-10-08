@@ -11,7 +11,7 @@ const userLoader: Middleware<Context> = async (ctx, next) => {
   );
   ctx.user = user;
 
-  next();
+  return next();
 };
 
 export default userLoader;

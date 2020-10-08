@@ -1,11 +1,12 @@
 import { randomInt } from '@frontendmonster/utils';
 import R from 'ramda';
-import Telegraf, {
+import {
   AdminPermissions,
   MessageEntity,
   EntityType,
   Telegram,
   TOptions,
+  TelegrafContext,
 } from 'telegraf-ts';
 import { store, Store, Settings, User, Url, Group, Language } from './store';
 import { giphy, flagRegex, extractFlags } from './utils';
@@ -23,7 +24,7 @@ export interface ExtendedMessageEnity {
   content?: string;
 }
 
-export class Context extends Telegraf.Context {
+export class Context extends TelegrafContext {
   gifs: { unAuthorized: Gif; start: Gif; bye: Gif } = {
     unAuthorized: {
       caption: 'Nice try.',
@@ -230,7 +231,7 @@ export class Context extends Telegraf.Context {
   async can(action: AdminPermissions) {
     const admins = await this.telegram.getChatAdministrators(this.chat.id);
     return admins
-      .filter(admin => admin.status === 'creator' || admin[action])
+      .filter(admin => admin.status === 'creator' || (admin[action] as any))
       .some(admin => admin.user.id === this.from.id);
   }
 

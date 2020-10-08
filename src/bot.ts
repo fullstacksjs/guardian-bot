@@ -19,7 +19,7 @@ export function Bot({ token }: BotConfig) {
   bot.use(commands);
   bot.use(inline);
 
-  bot.catch((err: any, ctx) => {
+  bot.catch((err: any, ctx: Context) => {
     void ctx.report(err);
   });
 

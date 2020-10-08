@@ -9,7 +9,7 @@ const deleteWithDelay: Middleware<Context> = async (ctx, next) => {
     await ctx.deleteMessage();
   }
 
-  next();
+  return next();
 };
 
 export default deleteWithDelay;
